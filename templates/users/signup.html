@@ -3,10 +3,10 @@
 
 {% block content %}
 <h1>hello</h1>
-<form method="POST" id="signup_form">
-  {{ signup_form.hidden_tag() }}
+<form method="POST" id="user_form">
+  {{ form.hidden_tag() }}
 
-  {% for field in signup_form if field.widget.input_type != 'hidden' %}
+  {% for field in form if field.widget.input_type != 'hidden' %}
   {% for error in field.errors %}
   <span class="text-danger">{{ error }}</span>
   {% endfor %}

@@ -69,8 +69,8 @@ def delete(name):
     else:
         conversation.delete()    
 
-@app.route('/login', methods=['POST'])
-def login():
+# @app.route('/login', methods=['POST'])
+# def login():
     payload = request.get_json(force=True)
     username = payload.get('username')
     if not username:
@@ -125,20 +125,29 @@ def add_user_to_g():
 
 @app.route('/')
 def home():
-    form = UserForm()
-    return render_template('index.html', form=form)
+    return render_template('index.html')
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
-    signup_form = UserForm()
+    form = UserForm()
 
-    if signup_form.validate_on_submit():
-        username_taken = User.query.filter_by(username=signup_form.username.data).first()
+    if form.validate_on_submit():
+        username_taken = User.query.filter_by(username=form.username.data).first()
         if username_taken:
             flash('That username is already taken', 'error')
 
-    return render_template('/users/signup.html', signup_form=signup_form)
+    return render_template('/users/signup.html', form=form)
 
+@app.route('/login', methods=['GET','POST'])
+def login():
+    form = UserForm()
+
+    if form.validate_on_submit():
+        username_taken = User.query.filter_by(username=form.username.data).first()
+        if username_taken:
+            flash('That username is already taken', 'error')
+
+    return render_template('/users/login.html', form=form)
 
 
 if __name__=='__main__':

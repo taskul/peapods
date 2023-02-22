@@ -3,6 +3,7 @@ body {
   padding: 0px;
   font-family: 'Varela Round', sans-serif;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -78,12 +79,20 @@ body {
 }
 
 .main-logo-img {
-  width: 300px;
+  width: 500px;
 }
+
 /* ----------------------------Containers----------------------------------- */
+.welcome_image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .main-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
 }
 
 /* ---------------------------front page-------------------------------------- */
@@ -101,7 +110,7 @@ body {
 }
 
 .login_button_switch {
-  width: 50%;
+  width: 100%;
   display: inline-block;
   text-align: center;
   padding: 10px;
@@ -111,9 +120,20 @@ body {
   background-color: #387C75;
   color: white;
 }
+
 #login {
   border: 1px solid #387C75;
   color: #387C75;
 }
 
 .small_forms_container {}
+
+.user_forms {
+  justify-content: center;
+}
+
+/* ----------------------------Buttons-------------------------------- */
+.button-primary {
+  background-color: #387C75;
+  color: white;
+}
