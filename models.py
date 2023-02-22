@@ -23,9 +23,12 @@ class User(db.Model):
     email = db.Column(db.Text, nullable=False)
     city = db.Column(db.Text, nullable=False)
     state = db.Column(db.Text, nullable=False)
+
+    pods = db.relationship('Pod', backref='user')
+    sub_pods = db.relationship('SubPod', backref='user')
     
     @classmethod
-    def signup(cls, username, password, first_name, last_name, email):
+    def signup(cls, username, password, first_name, last_name, email, city, state):
         '''Sign up new user'''
 
         hashed_password = bcrypt.generate_password_hash(password=password).decode('UTF-8')
@@ -34,7 +37,9 @@ class User(db.Model):
             password=hashed_password,
             first_name=first_name,
             last_name=last_name,
-            email=email
+            email=email,
+            city=city,
+            state=state
         )
         db.session.add(new_user)
         return new_user

@@ -30,6 +30,7 @@ app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'oh_so_Super_Secr8')
 
 connect_db(app)
+app.app_context().push()
 
 chatrooms_cli = AppGroup('chatrooms', help='Manage your chat rooms.')
 app.cli.add_command(chatrooms_cli)
@@ -123,20 +124,47 @@ def add_user_to_g():
     else:
         g.user = None
 
+def login_user(user):
+    if CURRENT_USER in session:
+        del session[CURRENT_USER]
+
+def logout_user(user):
+    session.pop(CURRENT_USER)
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    if CURRENT_USER in session:
+        user = User.query.get_or_404(int(session[CURRENT_USER]))
+        return render_template('index.html', user=user)
+    else:
+        return render_template('index.html')
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
     form = UserForm()
 
+    if CURRENT_USER in session:
+        return redirect('/')
     if form.validate_on_submit():
-        username_taken = User.query.filter_by(username=form.username.data).first()
-        if username_taken:
-            flash('That username is already taken', 'error')
+        try: 
+            user = User.signup(
+                username=form.username.data, 
+                password=form.password.data,
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                city=form.city.data,
+                state=form.state.data
+            )
+            db.session.commit()
+        except IntegrityError:
+            flash('Username is already taken', 'danger')
+            return render_template('/users/signup.html', form=form)
 
-    return render_template('/users/signup.html', form=form)
+        login_user(user)
+        return redirect('/')
+    else:
+        return render_template('/users/signup.html', form=form)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
