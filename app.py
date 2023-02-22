@@ -13,16 +13,16 @@ from twilio.base.exceptions import TwilioRestException
 
 # This function will read the four configuration variables stored in the .env file 
 # and add them to the environment.
-load_dotenv()
 account_sid = os.environ.get('ACCOUNT_SID')
 auth_token = os.environ.get('AUTH_TOKEN')
 api_sid = os.environ.get('SID')
 api_secret = os.environ.get('SECRET')
+load_dotenv()
 CURRENT_USER = "curr_user"
 
+# client = Client(account_sid, auth_token)
+# twilio_client = Client()
 app = Flask(__name__)
-client = Client(account_sid, auth_token)
-twilio_client = Client()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'sqlite:///peapods.db'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -30,13 +30,6 @@ app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'oh_so_Super_Secr8')
 
 connect_db(app)
-
-# message = client.messages.create(
-#     to="+15558675309", 
-#     from_="+15017250604",
-#     body="Hello from Python!")
-
-# print(message.sid)
 
 chatrooms_cli = AppGroup('chatrooms', help='Manage your chat rooms.')
 app.cli.add_command(chatrooms_cli)
@@ -112,7 +105,8 @@ def login():
     token = AccessToken(twilio_account_sid, twilio_api_key_sid,
                         twilio_api_key_secret, identity=username)
     token.add_grant(ChatGrant(service_sid=service_sid))
-
+    
+    print(token)
     # send a response
     return {
         'chatrooms': [[conversation.friendly_name, conversation.sid]
@@ -131,9 +125,10 @@ def add_user_to_g():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    form = UserForm()
+    return render_template('index.html', form=form)
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET','POST'])
 def signup():
     signup_form = UserForm()
 
@@ -142,7 +137,7 @@ def signup():
         if username_taken:
             flash('That username is already taken', 'error')
 
-    return render_template('index.html', signup_form=signup_form)
+    return render_template('/users/signup.html', signup_form=signup_form)
 
 
 
