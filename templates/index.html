@@ -2,21 +2,25 @@
 {% block title %}Welcome to Our Pea Pods{% endblock %}
 
 {% block content %}
-
-<div id="user_forms_container">
+<div class='main-container'>
+    <div class='front-page-logo'>
+        <img src="/static/imgs/peapods_logo.png" class='main-logo-img'>
+        <img src="/static/imgs/peaPods.png">
+    </div>
+<div class="user_forms_container">
     <div id="signup" class="login_button_switch">SignUp</div>
     <div id="login" class="login_button_switch">Login</div>
     <div id="signup_form_container" class="small_forms_container">
         <form method="POST" id="signup_form" class="signin_login_forms">
             {{ form.hidden_tag() }}
-
-            {% for field in form if field.widget.input_type != 'hidden' %}
-            {% for error in field.errors %}
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-            {{ field(placeholder=field.label.text, class="form-control") }}
-            {% endfor %}
-
+            {{ form.username(placeholder=form.username.label.text, class='input-field') }}
+            {{ form.email(placeholder=form.email.label.text, class='input-field')}}
+            {{ form.first_name(placeholder=form.first_name.label.text, class='input-field')}}
+            {{ form.last_name(placeholder=form.last_name.label.text, class='input-field')}}
+            {{ form.city(placeholder=form.city.label.text, class='input-field')}}
+            {{ form.state(placeholder=form.state.label.text, class='input-field')}}
+            {{ form.password(placeholder=form.password.label.text, class='input-field')}}
+            <br>
             <button class="btn btn-primary btn-lg btn-block">Sign up</button>
         </form>
     </div>
@@ -24,17 +28,13 @@
         <form method="POST" id="login_form">
             {{ form.hidden_tag() }}
 
-            {% for field in form if field.widget.input_type != 'hidden' %}
-            {% for error in field.errors %}
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-            {{ field(placeholder=field.label.text, class="form-control") }}
-            {% endfor %}
-
+            {{ form.username(placeholder=form.username.label.text, class='input-field') }}
+            {{ form.password(placeholder=form.password.label.text, class='input-field')}}
+            <br>
             <button class="btn btn-primary btn-lg btn-block">Log in</button>
         </form>
     </div>
-
+</div>
 
 </div>
 

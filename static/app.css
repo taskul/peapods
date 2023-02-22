@@ -1,16 +1,20 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Varela Round', sans-serif;
+}
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: #387C75;
   color: #fff;
   height: 80px;
   padding: 0 20px;
 }
 
-.navbar-brand a {
-  font-size: 24px;
-  font-weight: bold;
+.nav-logo {
+  width: 80px;
 }
 
 .navbar-nav {
@@ -26,6 +30,7 @@
 
 .nav-item a {
   color: #fff;
+  font-family: 'Varela Round', sans-serif;
   text-decoration: none;
 }
 
@@ -72,9 +77,43 @@
   }
 }
 
+.main-logo-img {
+  width: 300px;
+}
+/* ----------------------------Containers----------------------------------- */
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ---------------------------front page-------------------------------------- */
+.front-page-logo {
+  padding-left: auto;
+  padding-right: auto;
+  align-content: center;
+}
+
 /* --------------------------Login and Sign up forms------------------------- */
+.user_forms_container {
+  padding: 20%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .login_button_switch {
+  width: 50%;
   display: inline-block;
+  text-align: center;
+  padding: 10px;
+}
+
+#signup {
+  background-color: #387C75;
+  color: white;
+}
+#login {
+  border: 1px solid #387C75;
+  color: #387C75;
 }
 
 .small_forms_container {}
