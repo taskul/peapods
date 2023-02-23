@@ -24,8 +24,8 @@ class User(db.Model):
     city = db.Column(db.Text, nullable=False)
     state = db.Column(db.Text, nullable=False)
 
-    pods = db.relationship('Pod', backref='user')
-    sub_pods = db.relationship('SubPod', backref='user')
+    pods = db.relationship('Pod', secondary="pod_users", backref='user')
+    sub_pods = db.relationship('SubPod', secondary="sub_pod_users", backref='user')
     
     @classmethod
     def signup(cls, username, password, first_name, last_name, email, city, state):
@@ -65,6 +65,7 @@ class SubPod(db.Model):
     __tablename__ = 'sub_pods'
     id = db.Column(db.Integer, db.ForeignKey('pods.id'), primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
+    description = db.Column(db.Text)
 
 class PodUser(db.Model):
     '''Users assigned to Pods'''
@@ -75,7 +76,7 @@ class PodUser(db.Model):
     owner = db.Column(db.Boolean, default=False)
 
 class SubPodUser(db.Model):
-    __tablename__ = 'sub_pod_user'
+    __tablename__ = 'sub_pod_users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     pod_id = db.Column(db.Integer, db.ForeignKey('pods.id', ondelete='cascade'))
     sub_pod_id = db.Column(db.Integer, db.ForeignKey('sub_pods.id', ondelete='cascade'))

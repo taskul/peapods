@@ -17,6 +17,11 @@ class UserForm(FlaskForm):
     email = StringField('Email', validators=[Email()])
     city = StringField('City', validators=[DataRequired()])
     state = SelectField('State', choices=[(st, st) for st in states])
+
+class LoginForm(FlaskForm):
+    '''Log in user form'''
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     
 class EditUserForm(FlaskForm):
     '''Edit new user form'''
@@ -35,7 +40,7 @@ class UpdatePassword(FlaskForm):
     
 class PodForm(FlaskForm):
     '''Create new pod/group'''
-    pod = StringField('Pod name', validators=[DataRequired()])
+    name = StringField('Pod name', validators=[DataRequired()])
     description = TextAreaField('Description')
 
 class MessageForm(FlaskForm):
