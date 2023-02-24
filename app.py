@@ -43,32 +43,33 @@ def logout_user(user):
 # Routes --------------------------------------------------------------
 @app.route('/')
 def home():
-    if CURRENT_USER in session:
-        user = User.query.get_or_404(int(session[CURRENT_USER]))
-        if not user.pods:
-            form = PodForm()
-            if form.validate_on_submit:
-                try:
-                    new_pod = Pod(name=form.name.data, description=form.description.data)
-                    db.session.add(new_pod)
-                    db.session.commit()
-                except IntegrityError:
-                    flash('Pod name already exists')
-                    return render_template('/pods/initial_pod_setup.html', user=user)
-                return redirect('/users/invite_team.html')
+    # if CURRENT_USER in session:
+    #     user = User.query.get_or_404(int(session[CURRENT_USER]))
+    #     if not user.pods:
+    #         form = PodForm()
+    #         if form.validate_on_submit:
+    #             try:
+    #                 new_pod = Pod(name=form.name.data, description=form.description.data)
+    #                 db.session.add(new_pod)
+    #                 db.session.commit()
+    #             except IntegrityError:
+    #                 flash('Pod name already exists')
+    #                 return render_template('/pods/initial_pod_setup.html', user=user)
+    #             return redirect('/users/invite_team.html')
 
-            return render_template('/pods/initial_pod_setup.html', user=user)
-        else:
-            return render_template('/users/user_home.html', user=user)
-    else:
-        return render_template('index.html')
+    #         return render_template('/pods/initial_pod_setup.html', user=user)
+    #     else:
+    #         return render_template('/users/user_home.html', user=user)
+    # else:
+    return render_template('index.html')
 
-@app.route('/signup', methods=['GET','POST'])
+@app.route('/users/signup', methods=['GET','POST'])
 def signup():
     form = UserForm()
 
     if CURRENT_USER in session:
-        return redirect('/')
+        del session[CURRENT_USER]
+
     if form.validate_on_submit():
         try: 
             user = User.signup(
@@ -86,11 +87,12 @@ def signup():
             return render_template('/users/signup.html', form=form)
 
         login_user(user)
-        return redirect('/')
+
+        return redirect('/pods/create')
     else:
         return render_template('/users/signup.html', form=form)
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/users/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -101,6 +103,34 @@ def login():
         else:
             flash('Username or password did not match', 'error')
     return render_template('/users/login.html', form=form)
+
+# ------------------Managing Pods---------------------------
+@app.route('/pods/create', methods=['GET', 'POST'])
+def create_pod():
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    form = PodForm()
+    if form.validate_on_submit:
+        try:
+            pod = Pod(name=form.name.data, description=form.description.data)
+            db.session.add(pod)
+            db.session.commit()
+            print('G USER-----------------------', g.user, g.user.id)
+            pod_relationship = PodUser(
+                pod_id=pod.id,
+                user_id=g.user.id,
+                owner=True
+            )
+            db.session.add(pod_relationship)
+            db.session.commit()
+        except IntegrityError:
+            flash('Pod with that name already exists', 'error')
+            return render_template('/pods/create_pod.html', form=form)
+        return redirect('/')
+
+    else:
+        return render_template('/pods/create_pod.html', form=form)
 
 
 if __name__=='__main__':
