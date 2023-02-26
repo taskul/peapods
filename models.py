@@ -23,9 +23,11 @@ class User(db.Model):
     email = db.Column(db.Text, nullable=False)
     city = db.Column(db.Text, nullable=False)
     state = db.Column(db.Text, nullable=False)
+    lat_lng = db.Column(db.Text)
 
     pods = db.relationship('Pod', secondary="pod_users", backref='user')
     sub_pods = db.relationship('SubPod', secondary="sub_pod_users", backref='user')
+    hobbies = db.relationship('Hobby', secondary='user_hobbies', backref='user')
     
     @classmethod
     def signup(cls, username, password, first_name, last_name, email, city, state):
@@ -108,7 +110,6 @@ class Hobby(db.Model):
     __tablename__ = 'hobbies'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=True, unique=True)
-    description = db.Column(db.Text)
 
 class UserHobby(db.Model):
     '''Hobbies to users'''

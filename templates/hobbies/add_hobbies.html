@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Pick hobbies{% endblock %}
+
+{% block content %}
+<h1>Pick hobbies/activities you enjoy doing.</h1>
+<div class="main_container">
+    <div clas="sidebar_menu">
+        <form method="POST" id="user_form">
+            {{ form.hidden_tag() }}
+
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {{ field(placeholder=field.label.text, class="form-control") }}
+            {% endfor %}
+
+            <button class="button-primary">Add</button>
+        </form>
+        <a href='/'>
+            <div type="button" class="button-primary">Done</div>
+        </a>
+    </div>
+    <div>
+        <ul>
+            {% for hobby in user.hobbies %}
+            <li>{{ hobby.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% endblock %}

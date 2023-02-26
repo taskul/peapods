@@ -82,6 +82,29 @@ body {
   width: 500px;
 }
 
+/* -----------------------------Side bar menu for user dashboard ---------------- */
+.sidebar_menu {
+  grid-row-start: 1;
+  grid-row-end: 1;
+  padding-top: 50px;
+  background-color: #3b7c38;
+}
+
+
+.sidebar_menu_buttons {
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  border-right: 2px solid #387C75;
+}
+
+
+.main_user_dashboard {
+  display: inline-block;
+  padding: 20px 50px;
+}
+
 /* ----------------------------Containers----------------------------------- */
 .welcome_image {
   display: block;
@@ -90,9 +113,63 @@ body {
   width: 50%;
 }
 
-.main-container {
-  /* display: grid;
-  grid-template-columns: 1fr 1fr; */
+.main_container {
+  display: grid;
+  grid-template-columns: 150px auto;
+  grid-gap: 8px;
+  padding: 8px;
+}
+
+/* ----------------------------Trip advisor attractions----------------------- */
+.things_to_do {
+  width: 70vw;
+  height: 125px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.attraction {
+  display: inline-block;
+  white-space: normal;
+  width: 150px;
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid #3b7c38;
+  font-size: 0.7rem;
+}
+
+.attraction_title {
+  display: inline-block;
+}
+
+.attraction_link {
+  margin: 10px;
+  text-decoration: none;
+}
+
+/* ---------------------------loading spinner--------------------------------- */
+.loader {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 16px solid #444;
+  border-top: 16px solid #387C75;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ---------------------------front page-------------------------------------- */
@@ -126,8 +203,6 @@ body {
   color: #387C75;
 }
 
-.small_forms_container {}
-
 .user_forms {
   justify-content: center;
 }
@@ -136,4 +211,10 @@ body {
 .button-primary {
   background-color: #387C75;
   color: white;
+}
+
+/* ----------------------------images----------------------------------- */
+#tripadvisor_logo {
+  height: 20px;
+  margin-right: 10px;
 }

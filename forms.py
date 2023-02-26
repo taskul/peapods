@@ -49,7 +49,8 @@ class MessageForm(FlaskForm):
     contents = TextAreaField('Contents', validators=[DataRequired()])
 
 class HobbyForm(FlaskForm):
-    name = StringField('Hobby/Activity', validators=[DataRequired()])
+    name = SelectField('Hobby/Activity')
+    add_new = StringField('Add Hobby/Activity')
 
 
 

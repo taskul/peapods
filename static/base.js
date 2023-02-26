@@ -1,4 +1,3 @@
-// const client = new Twilio.Conversations.Client(token);
 const navbarToggle = document.querySelector('.navbar-toggle');
 const navbarNav = document.querySelector('.navbar-nav');
 

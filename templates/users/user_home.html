@@ -2,6 +2,28 @@
 {% block title %}Welcome to Our Pea Pods{% endblock %}
 
 {% block content %}
-
-
+<div class="main_container">
+    <div clas="sidebar_menu">
+        <div class="sidebar_menu_buttons">
+            Create Main Pod
+        </div>
+        <div class="sidebar_menu_buttons">
+            Create a Sub Pod
+        </div>
+    </div>
+    <div class="main_user_dashboard">
+        <div>
+            <img src="/static/imgs/tripadvisor_logo.png" id="tripadvisor_logo">
+            Things to do near {{ user.city.capitalize() }}, {{ user.state.upper() }}
+            <div class="things_to_do">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div>
+            Your team
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- <script src="/static/dashboard.js"></script> -->
 {% endblock %}
