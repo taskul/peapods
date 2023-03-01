@@ -1,0 +1,39 @@
+{% extends '/users/user_menu.html' %}
+
+{% block title %}Create a new Sub-Pod{% endblock %}
+
+{% block dashboard %}
+
+{% if not pod %}
+<div class="padded_container">
+    <h1 class="main_title">Create a Pod first before making a Sub-Pod</h1>
+</div>
+{% else %}
+<div class="padded_container">
+    <h1 class="main_title">Create a new Sub-Pod</h1>
+    <p class="sub_title">What is a Sub-Pod?</p>
+    <p class="content_text">Pod is an online group for your team where team members can learn about eachother hobbies
+        and interests. </p>
+    <p>Sub-pod is a smaller group within a Pod. Want to start a smaller group for team members who are into hiking?</p>
+    <p>Use filters to find common hobbies and intrsts with your team members</p>
+    <form method="POST" id="user_form">
+        {{ form.hidden_tag() }}
+
+        {{ form.name(placeholder=form.name.label.text, class="input_field") }}
+        <br>
+        {{ form.description(placeholder=form.description.label.text, class="input_area_field") }}
+        <br>
+        <button class="button-primary">Create</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endif %}
+{% endblock %}

@@ -2,18 +2,27 @@
 {% block title %}Welcome to Our Pea Pods{% endblock %}
 
 {% block content %}
-<h1>hello</h1>
-<form method="POST" id="user_form">
-  {{ form.hidden_tag() }}
+<div class="center_contents_containers">
+  <form method="POST" id="user_form" class="user_forms">
+    {{ form.hidden_tag() }}
 
-  {% for field in form if field.widget.input_type != 'hidden' %}
-  {% for error in field.errors %}
-  <span class="text-danger">{{ error }}</span>
-  {% endfor %}
-  {{ field(placeholder=field.label.text, class="form-control") }}
-  {% endfor %}
-
-  <button class="button-primary">Sign me up!</button>
-</form>
-
+    {% for field in form if field.widget.input_type != 'hidden' %}
+    {% for error in field.errors %}
+    <span class="text-danger">{{ error }}</span>
+    {% endfor %}
+    {{ field(placeholder=field.label.text, class="input_field") }}<br>
+    {% endfor %}
+    <br>
+    <button class="button-secondary">Sign me up!</button>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class=flashes>
+    {% for category, message in messages %}
+    <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+</div>
 {% endblock %}

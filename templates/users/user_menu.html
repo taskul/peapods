@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to Our Pea Pods{% endblock %}
+
+{% block content %}
+<div class="main_container">
+    <div clas="sidebar_menu">
+        <div class="sidebar_menu_buttons" type="button" id="sidebar_main_pod">
+            Main Pod
+        </div>
+        <div class="collapsed_container" id="collapsed_main_pod_section">
+            <ul class='undecorated_list'>
+                <li>
+                    <a href="/pods/create">
+                        <div class="sidebar_collapsed_buttons" type="button">
+                            Create Main Pod
+                        </div>
+                    </a>
+                </li>
+                {% if pod_member %}
+                {% if pod_member.owner %}
+                <li>
+                    <a href="/pods/manage">
+                        <div class="sidebar_collapsed_buttons" type="button">
+                            Manage Pod
+                        </div>
+                    </a>
+                </li>
+                {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+        <!-- Button for collapsed Sub-Pod management menu -->
+        <div class="sidebar_menu_buttons" type="button" id="sidebar_sub_pod">
+            Sub-Pods
+        </div>
+        <div class="collapsed_container" id="collapsed_sub_pod_section">
+            <ul class='undecorated_list'>
+
+                <li>
+                    <a href="/sub-pods/create">
+                        <div class="sidebar_collapsed_buttons" type="button">
+                            Create a Sub-Pod
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <div class="sidebar_collapsed_buttons" type="button">
+                        Edit Sub-Pods
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <a href="/hobbies/create">
+            <div class="sidebar_menu_buttons" type="button">
+                Add/Update Hobbies
+            </div>
+        </a>
+    </div>
+    <div class="main_user_dashboard">
+        {% block dashboard %}
+
+        {% endblock %}
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

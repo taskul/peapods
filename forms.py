@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, Optional
 
 states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
           "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
@@ -48,9 +48,16 @@ class MessageForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     contents = TextAreaField('Contents', validators=[DataRequired()])
 
+# this are both set as optional because we only need one of the fields to process data 
+# when creating a new hobby. Create hobby route does checking if the data is valid or not. 
 class HobbyForm(FlaskForm):
-    name = SelectField('Hobby/Activity')
-    add_new = StringField('Add Hobby/Activity')
+    name = SelectField('Hobby/Activity', validators=[Optional()])
+    add_new = StringField('Add Hobby/Activity', validators=[Optional(), Length(min=0,max=30)])
+
+class InviteMembers(FlaskForm):
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
 
 
 

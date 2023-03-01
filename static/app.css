@@ -4,6 +4,33 @@ body {
   font-family: 'Varela Round', sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
+/* ----------------------------------Styling Scroll bars------------------------- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #387C75 white;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #387C75;
+  border-radius: 20px;
+  border: 3px solid white;
+}
+
+/* ----------------------------------Styling Navbar------------------------- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -32,7 +59,11 @@ body {
 .nav-item a {
   color: #fff;
   font-family: 'Varela Round', sans-serif;
-  text-decoration: none;
+  padding: 30px 10px;
+}
+
+.nav-item a:hover {
+  background-color: #444;
 }
 
 .navbar-toggle {
@@ -87,22 +118,44 @@ body {
   grid-row-start: 1;
   grid-row-end: 1;
   padding-top: 50px;
-  background-color: #3b7c38;
 }
-
 
 .sidebar_menu_buttons {
   display: inline-block;
-  width: 100%;
-  height: 40px;
-  background-color: white;
-  border-right: 2px solid #387C75;
+  width: 90%;
+  height: auto;
+  margin: 5px;
+  padding: 10px;
+  background-color: #387C75;
+  color: white;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  z-index: 1;
 }
 
+.sidebar_collapsed_buttons {
+  display: inline-block;
+  width: 80%;
+  height: auto;
+  margin: 5px 5px 5px 15px;
+  padding: 5px 5px 5px 10px;
+  background-color: #444;
+  color: white;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  z-index: 1;
+}
+
+.sidebar_menu_buttons:hover,
+.sidebar_menu_buttons:active {
+  background-color: #444;
+}
 
 .main_user_dashboard {
   display: inline-block;
   padding: 20px 50px;
+  margin-left: 10px;
+  border-left: 2px solid #387C75;
 }
 
 /* ----------------------------Containers----------------------------------- */
@@ -115,20 +168,53 @@ body {
 
 .main_container {
   display: grid;
-  grid-template-columns: 150px auto;
+  grid-template-columns: 170px auto;
   grid-gap: 8px;
   padding: 8px;
 }
 
-/* ----------------------------Trip advisor attractions----------------------- */
-.things_to_do {
+.horizontal_scroll_container {
   width: 70vw;
-  height: 125px;
+  height: auto;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
 }
+
+.padded_container {
+  padding: 50px;
+}
+
+.center_contents_containers {
+  padding: 30px;
+  margin: 0px auto;
+  width: 50%;
+}
+
+.half_and_half_split_container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 8px;
+  padding: 8px;
+}
+
+.collapsed_container {
+  display: none;
+  overflow: hidden;
+}
+
+.trapezium_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  background-color: #387C75;
+  overflow: hidden;
+  border-radius: 60% 0 0 60% / 100% 0 0 100%;
+}
+
+/* ----------------------------Trip advisor attractions----------------------- */
 
 .attraction {
   display: inline-block;
@@ -146,7 +232,6 @@ body {
 
 .attraction_link {
   margin: 10px;
-  text-decoration: none;
 }
 
 /* ---------------------------loading spinner--------------------------------- */
@@ -173,43 +258,56 @@ body {
 }
 
 /* ---------------------------front page-------------------------------------- */
-.front-page-logo {
-  padding-left: auto;
-  padding-right: auto;
-  align-content: center;
-}
 
-/* --------------------------Login and Sign up forms------------------------- */
-.user_forms_container {
-  padding: 20%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.login_button_switch {
-  width: 100%;
-  display: inline-block;
-  text-align: center;
-  padding: 10px;
-}
-
-#signup {
-  background-color: #387C75;
-  color: white;
-}
-
-#login {
-  border: 1px solid #387C75;
-  color: #387C75;
-}
-
+/* --------------------------Forms------------------------- */
 .user_forms {
-  justify-content: center;
+  margin: 0 auto;
+  width: 400px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #387C75;
+  text-align: center;
 }
 
 /* ----------------------------Buttons-------------------------------- */
 .button-primary {
+  display: inline-block;
+  width: 150px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: #387C75;
+  color: white;
+  padding: 10px 0px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.button-primary:hover,
+.button-primary:active {
+  background-color: #444;
+}
+
+.button-secondary {
+  display: inline-block;
+  width: 150px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  color: #387C75;
+  padding: 10px 0px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.button-secondary:hover,
+.button-secondary:active {
+  background-color: #444;
   color: white;
 }
 
@@ -217,4 +315,101 @@ body {
 #tripadvisor_logo {
   height: 20px;
   margin-right: 10px;
+}
+
+/* ----------------------------Pods------------------------------------- */
+.pod_thumbnail {
+  display: inline-block;
+  white-space: normal;
+  width: 150px;
+  padding: 5px;
+  margin: 5px;
+  background-color: #387C75;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.pod_thumbnail_text {
+  color: white;
+  font-size: 0.7rem;
+  padding: 3px;
+  margin: 3px;
+}
+
+/* -----------------------------------Hobbies ------------------------------------------- */
+.undecorated_list {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px 10px;
+  text-align: left;
+  list-style-type: none;
+}
+
+.user_hobbies {
+  margin-left: 50px;
+  border-left: 2px solid #387C75;
+  padding-left: 50px;
+}
+
+/* -----------------------------------Messages to the user------------------------------- */
+.error {
+  width: 310px;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(235, 110, 110);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.8rem;
+  z-index: 2;
+}
+
+.success {
+  width: 310px;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(59, 130, 65);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.8rem;
+  z-index: 2;
+}
+
+/* -----------------------------------Input Fields -------------------------------------- */
+.input_select {
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  width: 200px;
+  background-color: #387C75;
+  color: white;
+  border-radius: 15px;
+  border: 2px solid #387C75;
+}
+
+.input_field {
+  margin: 5px;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  width: 165px;
+  border-radius: 15px;
+  border: 2px solid #387C75;
+}
+
+.input_area_field {
+  margin: 10px 0px;
+  width: 300px;
+  height: 80px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 15px;
+  border: 2px solid #387C75;
+}
+
+/* -----------------------------------Additional Text Style ----------------------------- */
+.low_margin_title {
+  padding: 3px;
+  margin: 3px;
 }

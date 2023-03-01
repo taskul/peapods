@@ -1,5 +1,5 @@
 const loginButton = document.querySelector('.button-primary');
-const thingsToDO = document.querySelector('.things_to_do');
+const thingsToDO = document.querySelector('#things_to_do');
 
 const navbarToggle = document.querySelector('.navbar-toggle');
 const navbarNav = document.querySelector('.navbar-nav');

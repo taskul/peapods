@@ -20,7 +20,7 @@ class User(db.Model):
     password = db.Column(db.Text, nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.Text, nullable=False)
+    email = db.Column(db.Text, nullable=False, unique=True)
     city = db.Column(db.Text, nullable=False)
     state = db.Column(db.Text, nullable=False)
     lat_lng = db.Column(db.Text)
@@ -50,8 +50,8 @@ class User(db.Model):
     def authenticate(cls, username,  password):
         '''Check user and password'''
         user = User.query.filter_by(username=username).first()
-        password = bcrypt.check_password_hash(user.password, password)
         if user:
+            password = bcrypt.check_password_hash(user.password, password)
             if password:
                 return user
         return False
@@ -63,11 +63,16 @@ class Pod(db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.Text)
 
+    messages = db.relationship('Message', secondary='pod_messages', backref='pod')
+
 class SubPod(db.Model):
     __tablename__ = 'sub_pods'
-    id = db.Column(db.Integer, db.ForeignKey('pods.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    pod_id = db.Column(db.Integer, db.ForeignKey('pods.id'))
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.Text)
+
+    messages = db.relationship('Message', secondary='sub_pod_messages', backref='sub_pod')
 
 class PodUser(db.Model):
     '''Users assigned to Pods'''
@@ -91,6 +96,7 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(30), nullable=False)
     contents = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class PodMessage(db.Model):
@@ -109,7 +115,7 @@ class Hobby(db.Model):
     '''User hobbies/activities/intrests'''
     __tablename__ = 'hobbies'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.Text, nullable=True, unique=True)
+    name = db.Column(db.String(30), nullable=True, unique=True)
 
 class UserHobby(db.Model):
     '''Hobbies to users'''

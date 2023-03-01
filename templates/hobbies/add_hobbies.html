@@ -2,31 +2,44 @@
 {% block title %}Pick hobbies{% endblock %}
 
 {% block content %}
-<h1>Pick hobbies/activities you enjoy doing.</h1>
-<div class="main_container">
-    <div clas="sidebar_menu">
-        <form method="POST" id="user_form">
-            {{ form.hidden_tag() }}
 
-            {% for field in form if field.widget.input_type != 'hidden' %}
-            {% for error in field.errors %}
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-            {{ field(placeholder=field.label.text, class="form-control") }}
-            {% endfor %}
+<div class="center_contents_containers">
+    <h1>Pick hobbies/activities you enjoy doing.</h1>
+    <div class="half_and_half_split_container">
+        <div clas="sidebar_menu">
+            <form method="POST" id="user_form">
+                {{ form.hidden_tag() }}
+                <p class="low_margin_title">Select hobbies from the list</p>
+                {{ form.name(class='input_select') }}
+                <p class="low_margin_title">or add your hobby if it is not on the list</p>
+                {{ form.add_new(placeholder=form.add_new.label.text, class='input_field') }}
+                <br>
+                <button class="button-primary" type="submit">Add</button>
+            </form>
+        </div>
+        <div class="user_hobbies">
+            <h4 class="low_margin_title">Your hobies</h4>
+            <ul>
+                {% for hobby in hobbies %}
+                <li>{{ hobby.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <a href='/'>
+                <div type="button" class="button-primary">Done</div>
+            </a>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class=flashes>
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </div>
 
-            <button class="button-primary">Add</button>
-        </form>
-        <a href='/'>
-            <div type="button" class="button-primary">Done</div>
-        </a>
-    </div>
-    <div>
-        <ul>
-            {% for hobby in user.hobbies %}
-            <li>{{ hobby.name }}</li>
-            {% endfor %}
-        </ul>
     </div>
 
     {% endblock %}

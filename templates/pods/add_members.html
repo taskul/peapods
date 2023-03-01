@@ -1,0 +1,29 @@
+{% extends '/users/user_menu.html' %}
+
+{% block title %}Add members{% endblock %}
+
+{% block dashboard %}
+<div class="center_contents_containers">
+    <form method="POST" id="user_form" class="user_forms">
+        {{ form.hidden_tag() }}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        {% for error in field.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        {{ field(placeholder=field.label.text, class="input_field") }}<br>
+        {% endfor %}
+        <br>
+        <button class="button-secondary">Send Invite</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

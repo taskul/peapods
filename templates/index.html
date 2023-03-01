@@ -2,11 +2,22 @@
 {% block title %}Welcome to Our Pea Pods{% endblock %}
 
 {% block content %}
-<div class='welcome_image'>
-    <div class='front-page-logo'>
-        <img src="/static/imgs/peapods_welcome.png" class='main-logo-img'>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class=flashes>
+    {% for category, message in messages %}
+    <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<div class="half_and_half_split_container">
+    <div class="center_contents_containers">
+        <img src="/static/imgs/peapods_welcome.png" class='main-logo-img' alt="Main PeaPods logo">
     </div>
-
+    <div class="trapezium_container">
+        Text
+    </div>
 </div>
 
 {% endblock %}
