@@ -1,11 +1,31 @@
 {% extends '/users/user_menu.html' %}
 
-{% block title %}Manage main Pod{% endblock %}
+{% block title %}Welcome to {{pod.name}} Pod{% endblock %}
 
 {% block dashboard %}
 <h1 class="main_title">{{ pod.name }} Pod</h1>
 <p class="sub_title">{{ pod.description }}</p>
 
+<form method="POST" id="user_form" class="message_form">
+    {{ form.hidden_tag() }}
+
+    {% for field in form if field.widget.input_type != 'hidden' %}
+    {% for error in field.errors %}
+    <span class="text-danger">{{ error }}</span>
+    {% endfor %}
+    {{ field(placeholder=field.label.text, class="input_field") }}
+    {% endfor %}
+    <button class="button-secondary">Post</button>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class=flashes>
+    {% for category, message in messages %}
+    <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
 
 
 

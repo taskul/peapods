@@ -251,7 +251,7 @@ def pod_home(pod_id):
         db.session.commit()
         return redirect(f'/pods/home/{pod.id}')
     pod_messages = pod.messages
-    return render_template('/pods/pod.html', form=form, pod_messages=pod_messages)
+    return render_template('/pods/pod.html', form=form, pod=pod, pod_member=pod_member, pod_messages=pod_messages)
 
 
 # ----------------------------------Managing Sub-Pods---------------------------

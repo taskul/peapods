@@ -16,7 +16,7 @@
             <p class="pod_thumbnail_text">
                 Pod
             </p>
-            <p class="pod_thumbnail_text">
+            <p class="pod_thumbnail_text_title">
                 {{ pod.name }}
             </p>
             <p class="pod_thumbnail_text">
@@ -27,20 +27,22 @@
 </div>
 <div>
     <h4 class="low_margin_title">Your team</h4>
+    <div>
     {% for member in team %}
-    <div class='pod_thumbnail'>
-        <p class="pod_thumbnail_text">
-            {{ member.first_name }} {{ member.last_name }}
-        </p>
-        <ul class="undecorated_list">
-            {% for hobby in member.hobbies %}
-            <li class="pod_thumbnail_text">
-                {{ hobby.name }}
-            </li>
-            {% endfor %}
-        </ul>
+            <div class='pod_thumbnail'>
+                <p class="pod_thumbnail_text_title">
+                    {{ member.first_name }} {{ member.last_name }}
+                </p>
+                <ul class="undecorated_list">
+                    {% for hobby in member.hobbies %}
+                    <li class="pod_thumbnail_text">
+                        {{ hobby.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
-    </div>
+        </div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- <script src="/static/dashboard.js"></script> -->
