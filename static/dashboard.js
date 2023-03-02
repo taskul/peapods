@@ -1,14 +1,8 @@
-const loginButton = document.querySelector('.button-primary');
 const thingsToDO = document.querySelector('#things_to_do');
 
-const navbarToggle = document.querySelector('.navbar-toggle');
-const navbarNav = document.querySelector('.navbar-nav');
 let listOfLoc;
 let listOfLocDetails = [];
 
-navbarToggle.addEventListener('click', () => {
-    navbarNav.classList.toggle('active');
-});
 
 // Get a list of ids for near by attractions
 async function searchNearBy() {

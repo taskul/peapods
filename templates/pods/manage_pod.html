@@ -12,13 +12,14 @@
 <a href='/pods/add_members'>
     <div type="button" class="button-primary">Add</div>
 </a>
-<div>
+<div class='manage_team_container'>
     <h4 class="low_margin_title">Team members</h4>
     {% for member in members %}
-    <div class='pod_thumbnail'>
-        <p class="pod_thumbnail_text">
+    <div class='team_member_container'>
+        <p class="pod_thumbnail_text_title">
             {{ member.first_name }} {{ member.last_name }}
         </p>
+        <img class='trash' src='/static/imgs/trash.png'>
     </div>
     {% endfor %}
 </div>

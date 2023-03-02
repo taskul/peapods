@@ -1,0 +1,44 @@
+{% extends '/users/user_menu.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block dashboard %}
+<h1 class="main_title">{{ user_profile.first_name }} {{ user_profile.last_name }}</h1>
+
+<p class="sub_title">{{ user_profile.city }}, {{ user_profile.state }}</p>
+{% if profile_owner %}
+<a href='/users/edit/{{user_profile.id}}'>
+    <div type="button" class="button-info">Edit Profile</div>
+</a>
+{% endif %}
+<div class="half_and_half_split_container">
+<div class='all_hobbies_container'>
+    <p class="pod_thumbnail_text_title">
+        {{ user_profile.first_name }}'s list of hobbies/activities
+    </p>
+    <ul class="undecorated_list">
+        {% for hobby in profile_user_hobbies %}
+        <li class="pod_thumbnail_text">
+            {{ hobby.name }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if user_profile.id != current_user.id %}
+<div class='all_hobbies_container'>
+    <p class="pod_thumbnail_text_title">
+        Your List of hobbies/activities
+    </p>
+    <ul class="undecorated_list">
+        {% for hobby in current_user_hobbies %}
+        <li class="pod_thumbnail_text">
+            {{ hobby.name }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+</div>
+
+
+{% endblock %}

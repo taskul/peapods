@@ -173,6 +173,29 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect('/')
 
+# ----------------------------------Managing User---------------------------
+
+@app.route('/users/profile/<int:user_id>')
+def user_profile(user_id):
+    # check to see if user is logged in an authorized to access resource
+    if not g.user:
+        flash("Access unauthorized.", "error")
+        return redirect("/")
+    user, pod, pod_member = is_pod_member()
+    user_profile = User.query.get(user_id)
+    current_user_hobbies = user.hobbies
+    profile_user_hobbies = user_profile.hobbies
+    profile_owner = None
+    if user_profile.id == user.id:
+        profile_owner = True
+    return render_template('/users/user_profile.html', 
+                           user_profile=user_profile, 
+                           profile_owner=profile_owner,
+                           current_user=user, 
+                           current_user_hobbies=current_user_hobbies, 
+                           profile_user_hobbies=profile_user_hobbies
+                           )
+
 # ----------------------------------Managing Pods---------------------------
 
 @app.route('/pods/create', methods=['GET', 'POST'])
@@ -231,7 +254,7 @@ def add_pod_members():
         print('Something will happen')
     return render_template('/pods/add_members.html', form=form, pod_member=pod_member)
 
-@app.route('/pods/home/<pod_id>')
+@app.route('/pods/home/<int:pod_id>', methods=['GET', 'POST'])
 def pod_home(pod_id):
     if not g.user:
         flash("Access unauthorized.", "error")
@@ -241,16 +264,13 @@ def pod_home(pod_id):
     # returns User object, Pod Object and PodUser object
     user, pod, pod_member = is_pod_member()
     if form.validate_on_submit():
-        message = Message(title=form.title.data,
-                          contents=form.contents.data,
-                          user_id=user.id)
+        message = Message(contents=form.contents.data,
+                          user_id=user.id,
+                          pod_id=pod.id)
         db.session.add(message)
         db.session.commit()
-        pod_message = PodMessage(pod_id=pod.id, message_id=message.id)
-        db.session.add(pod_message)
-        db.session.commit()
         return redirect(f'/pods/home/{pod.id}')
-    pod_messages = pod.messages
+    pod_messages = Message.query.filter(Message.pod_id==pod.id).order_by(Message.timestamp.desc()).all()
     return render_template('/pods/pod.html', form=form, pod=pod, pod_member=pod_member, pod_messages=pod_messages)
 
 

@@ -28,6 +28,8 @@ class User(db.Model):
     pods = db.relationship('Pod', secondary="pod_users", backref='user')
     sub_pods = db.relationship('SubPod', secondary="sub_pod_users", backref='user')
     hobbies = db.relationship('Hobby', secondary='user_hobbies', backref='user')
+    pod_messages = db.relationship('Message', backref='pod_user')
+    sub_pod_messages = db.relationship('Message', backref='sub_pod_user')
     
     @classmethod
     def signup(cls, username, password, first_name, last_name, email, city, state):
@@ -64,6 +66,7 @@ class Pod(db.Model):
     description = db.Column(db.Text)
 
     messages = db.relationship('Message', secondary='pod_messages', backref='pod')
+    
 
 class SubPod(db.Model):
     __tablename__ = 'sub_pods'
@@ -73,6 +76,7 @@ class SubPod(db.Model):
     description = db.Column(db.Text)
 
     messages = db.relationship('Message', secondary='sub_pod_messages', backref='sub_pod')
+    
 
 class PodUser(db.Model):
     '''Users assigned to Pods'''
@@ -94,10 +98,11 @@ class Message(db.Model):
     '''User messages'''
     __tablename__ = 'messages'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(30), nullable=False)
     contents = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
+    pod_id = db.Column(db.Integer, db.ForeignKey('pods.id', ondelete='cascade'))
+    sub_pod_id = db.Column(db.Integer, db.ForeignKey('sub_pods.id', ondelete='cascade'))
 
 class PodMessage(db.Model):
     '''User messages'''

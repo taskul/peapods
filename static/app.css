@@ -115,8 +115,6 @@ a {
 
 /* -----------------------------Side bar menu for user dashboard ---------------- */
 .sidebar_menu {
-  grid-row-start: 1;
-  grid-row-end: 1;
   padding-top: 50px;
 }
 
@@ -152,7 +150,6 @@ a {
 }
 
 .main_user_dashboard {
-  display: inline-block;
   padding: 20px 50px;
   margin-left: 10px;
   border-left: 2px solid #387C75;
@@ -214,6 +211,34 @@ a {
   border-radius: 60% 0 0 60% / 100% 0 0 100%;
 }
 
+.team_member_container {
+  display: inline-block;
+  white-space: normal;
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  margin: 5px;
+  background-color: #387C75;
+  border-radius: 15px;
+}
+
+.message_container {
+  white-space: normal;
+  background-color: #387C75;
+  margin: 3px;
+  padding: 5px 5px 5px 15px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.all_hobbies_container {
+  white-space: normal;
+  background-color: #387C75;
+  margin: 3px;
+  padding: 5px 5px 5px 15px;
+  border-radius: 10px;
+  color: #fff;
+}
 /* ----------------------------Trip advisor attractions----------------------- */
 
 .attraction {
@@ -257,7 +282,15 @@ a {
   }
 }
 
-/* ---------------------------front page-------------------------------------- */
+/* ---------------------------ICONS-------------------------------------- */
+.trash {
+  width: 20px;
+  display: inline-block;
+  margin: 3px 10px;
+  float: right;
+  cursor: pointer;
+}
+
 
 /* --------------------------Forms------------------------- */
 .user_forms {
@@ -269,7 +302,8 @@ a {
   text-align: center;
 }
 .message_form {
-  
+  background-color: #387C75;
+  border-radius: 20px;
 }
 /* ----------------------------Buttons-------------------------------- */
 .button-primary {
@@ -313,6 +347,43 @@ a {
   color: white;
 }
 
+.button-message {
+  position: relative;
+  top: -30px;
+  width: 150px;
+  background-color: white;
+  color: #387C75;
+  padding: 10px 0px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.button-message:hover,
+.button-message:active {
+  background-color: #444;
+  color: white;
+}
+
+.button-info {
+  position: relative;
+  width: 150px;
+  background-color: #44558d;
+  color: white;
+  padding: 10px 0px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.button-info:hover,
+.button-info:active {
+  background-color: #444;
+  color: white;
+}
+
 /* ----------------------------images----------------------------------- */
 #tripadvisor_logo {
   height: 20px;
@@ -321,6 +392,21 @@ a {
 
 /* ----------------------------Pods------------------------------------- */
 .pod_thumbnail {
+  display: inline-block;
+  white-space: normal;
+  width: 150px;
+  height: 150px;
+  padding: 5px;
+  margin: 5px;
+  /* background-color: #387C75;
+  border-radius: 15px; */
+  border-radius: 33px;
+  background: linear-gradient(145deg, #688764, #577154);
+  box-shadow:  9px 9px 21px #4f664b,
+               -9px -9px 21px #73966f;
+}
+
+.team_member_thumbnail {
   display: inline-block;
   white-space: normal;
   width: 150px;
@@ -419,8 +505,26 @@ a {
   border: 2px solid #387C75;
 }
 
+.message_field {
+  display: inline-block;
+  margin: 10px;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  width: 300px;
+  height: 50px;
+  border-radius: 15px;
+  border: 2px solid #387C75;
+}
 /* -----------------------------------Additional Text Style ----------------------------- */
 .low_margin_title {
   padding: 3px;
   margin: 3px;
+}
+
+.timestamp {
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.6rem;
+  color: rgb(219, 218, 218);
+  float: right;
 }

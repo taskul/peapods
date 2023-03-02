@@ -45,8 +45,7 @@ class PodForm(FlaskForm):
 
 class MessageForm(FlaskForm):
     '''Message form'''
-    title = StringField('Title', validators=[DataRequired()])
-    contents = TextAreaField('Contents', validators=[DataRequired()])
+    contents = TextAreaField('Message', validators=[DataRequired(), Length(min=1,max=180)])
 
 # this are both set as optional because we only need one of the fields to process data 
 # when creating a new hobby. Create hobby route does checking if the data is valid or not. 

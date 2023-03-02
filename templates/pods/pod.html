@@ -5,18 +5,19 @@
 {% block dashboard %}
 <h1 class="main_title">{{ pod.name }} Pod</h1>
 <p class="sub_title">{{ pod.description }}</p>
-
-<form method="POST" id="user_form" class="message_form">
+<div class='message_container'>
+    <form method="POST" id="user_form" class="message_form">
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}
     {% for error in field.errors %}
     <span class="text-danger">{{ error }}</span>
     {% endfor %}
-    {{ field(placeholder=field.label.text, class="input_field") }}
+    {{ field(placeholder=field.label.text, class="message_field") }}
     {% endfor %}
-    <button class="button-secondary">Post</button>
+    <button class="button-message">Post</button>
   </form>
+</div>
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
   <ul class=flashes>
@@ -27,7 +28,18 @@
   {% endif %}
   {% endwith %}
 
-
+  {% for message in pod_messages %} 
+    <div class='message_container'>
+        <p class="pod_thumbnail_text_title">
+            {{ message.pod_user.first_name }} {{ message.pod_user.last_name }}:
+        </p>
+        {{ message.contents }}
+        {% if message.pod_user.id == pod_member.user_id %}
+            <img class='trash' src='/static/imgs/trash.png'>
+        {% endif %}
+        <p class='timestamp'>{{ message.timestamp }}</p>
+    </div>
+    {% endfor %}
 
 
 {% endblock %}

@@ -29,7 +29,8 @@
     <h4 class="low_margin_title">Your team</h4>
     <div>
     {% for member in team %}
-            <div class='pod_thumbnail'>
+            <a href='/users/profile/{{member.id}}'>
+            <div class='team_member_thumbnail'>
                 <p class="pod_thumbnail_text_title">
                     {{ member.first_name }} {{ member.last_name }}
                 </p>
@@ -41,9 +42,11 @@
                     {% endfor %}
                 </ul>
             </div>
+        </a>
         {% endfor %}
         </div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/static/base.js"></script>
 <!-- <script src="/static/dashboard.js"></script> -->
 {% endblock %}
