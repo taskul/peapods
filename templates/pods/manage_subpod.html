@@ -1,5 +1,35 @@
 {% extends '/users/user_menu.html' %}
 
+{% block title %}Manage Your Sub Pod{% endblock %}
+
 {% block dashboard %}
-WOW This stuff
+<div class="horizontal_scroll_container">
+    <h4 class="low_margin_title">Pods you own</h4>
+    <div class="pods_container">
+        {% if sub_pods_owned %}
+        {% for sub_pod in sub_pods_owned %}
+        <a href="/sub_pods/edit/{{sub_pod.id}}">
+            <div class="sub_pod_thumbnail">
+                <p class="pod_thumbnail_text">
+                    Sub-Pod
+                </p>
+                <p class="pod_thumbnail_text_title black_font">
+                    {{ sub_pod.name }}
+                </p>
+                <p class="pod_thumbnail_text">
+                    {{ sub_pod.description[0:100] }}...
+                </p>
+            </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <h1 class="main_title">You do not own any Sub-Pods</h1>
+        <p class="sub_title">You can ask for admin priveledges from a Sub-Pod owner.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
 {% endblock %}

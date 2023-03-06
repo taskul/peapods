@@ -14,7 +14,7 @@ async function searchNearBy() {
 async function getLocDetails(loc_id) {
     response = await axios.get('todo/nearby/details/' + loc_id)
     listOfLocDetails.push(response['data'])
-    localStorage.setItem('attractionDetails', listOfLocDetails)
+    localStorage.setItem('attractionDetails', JSON.stringify(listOfLocDetails))
 }
 
 // Create attractios nearby elements
@@ -55,7 +55,7 @@ function loopThroughLocDetails() {
 
 async function createListOfAttractions() {
     if (localStorage.getItem('attractionsDetails')) {
-        listOfLocDetails = localStorage.getItem('attractionsDetails')
+        listOfLocDetails = JSON.parse(localStorage.getItem('attractionsDetails'))
         loopThroughLocDetails()
         document.querySelector('.loader').remove()
     } else {

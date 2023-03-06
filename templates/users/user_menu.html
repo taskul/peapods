@@ -4,6 +4,11 @@
 {% block content %}
 <div class="main_container">
     <div clas="sidebar_menu">
+        <a href="/">
+            <div class="sidebar_menu_buttons" type="button">
+                Home
+            </div>
+        </a>
         <div class="sidebar_menu_buttons" type="button" id="sidebar_main_pod">
             Main Pod
         </div>
@@ -37,16 +42,18 @@
             <ul class='undecorated_list'>
 
                 <li>
-                    <a href="/sub-pods/create">
+                    <a href="/sub_pods/create">
                         <div class="sidebar_collapsed_buttons" type="button">
                             Create a Sub-Pod
                         </div>
                     </a>
                 </li>
                 <li>
-                    <div class="sidebar_collapsed_buttons" type="button">
-                        Edit Sub-Pods
-                    </div>
+                    <a href="/sub_pods/manage">
+                        <div class="sidebar_collapsed_buttons" type="button">
+                            Manage Sub-Pods
+                        </div>
+                    </a>
                 </li>
             </ul>
         </div>

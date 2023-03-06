@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="center_contents_containers">
-    <h1>Pick hobbies/activities you enjoy doing.</h1>
+    <h1 class="main_title">Pick hobbies/activities you enjoy doing.</h1>
     <div class="half_and_half_split_container">
         <div clas="sidebar_menu">
             <form method="POST" id="user_form">
@@ -12,14 +12,14 @@
                 <p class="low_margin_title">Select hobbies from the list</p>
                 {{ form.name(class='input_select') }}
                 <p class="low_margin_title">or add your hobby if it is not on the list</p>
-                {{ form.add_new(placeholder=form.add_new.label.text, class='input_field') }}
+                {{ form.add_new(placeholder=form.add_new.label.text, class='input_field_dark') }}
                 <br>
                 <button class="button-primary" type="submit">Add</button>
             </form>
         </div>
         <div class="user_hobbies">
             <h4 class="low_margin_title">Your hobies</h4>
-            <ul>
+            <ul class="hobbies_list">
                 {% for hobby in hobbies %}
                 <li>{{ hobby.name }}</li>
                 {% endfor %}

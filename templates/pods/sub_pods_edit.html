@@ -1,0 +1,47 @@
+{% extends '/users/user_menu.html' %}
+
+{% block title %}Edit Sub Pod{% endblock %}
+
+{% block dashboard %}
+<h1 class="main_title">{{ sub_pod.name }} Pod</h1>
+<p class="sub_title">{{ sub_pod.description }}</p>
+<div class="center_contents_containers">
+    <h4 class="low_margin_title">Add team members</h4>
+    <form method="POST" id="user_form" class="user_forms">
+        {{ form.hidden_tag() }}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        {% for error in field.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        {{ field(placeholder=field.label.text, class="input_select") }}<br>
+        {% endfor %}
+        <br>
+        <button class="button-secondary">Add</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+<div class='manage_team_container'>
+    <h4 class="low_margin_title">Team members</h4>
+    {% for member in sub_pod_members %}
+    <div class='team_member_container'>
+        <p class="pod_thumbnail_text_title">
+            {{ member.first_name }} {{ member.last_name }}
+        </p>
+        <img class='trash' src='/static/imgs/trash.png'>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+{% endblock %}

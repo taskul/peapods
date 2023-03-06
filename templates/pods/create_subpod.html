@@ -14,12 +14,13 @@
     <p class="sub_title">What is a Sub-Pod?</p>
     <p class="content_text">Pod is an online group for your team where team members can learn about eachother hobbies
         and interests. </p>
-    <p>Sub-pod is a smaller group within a Pod. Want to start a smaller group for team members who are into hiking?</p>
-    <p>Use filters to find common hobbies and intrsts with your team members</p>
+    <p class="content_text">Sub-pod is a smaller group within a Pod. Want to start a smaller group for team members who
+        are into hiking?</p>
+    <p class="content_text">Use filters to find common hobbies and intrsts with your team members</p>
     <form method="POST" id="user_form">
         {{ form.hidden_tag() }}
 
-        {{ form.name(placeholder=form.name.label.text, class="input_field") }}
+        {{ form.name(placeholder=form.name.label.text, class="input_field_dark") }}
         <br>
         {{ form.description(placeholder=form.description.label.text, class="input_area_field") }}
         <br>

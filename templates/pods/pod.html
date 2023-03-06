@@ -6,7 +6,7 @@
 <h1 class="main_title">{{ pod.name }} Pod</h1>
 <p class="sub_title">{{ pod.description }}</p>
 <div class='message_container'>
-    <form method="POST" id="user_form" class="message_form">
+  <form method="POST" id="user_form">
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}
@@ -18,28 +18,29 @@
     <button class="button-message">Post</button>
   </form>
 </div>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <ul class=flashes>
-    {% for category, message in messages %}
-    <li class="{{ category }}">{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-
-  {% for message in pod_messages %} 
-    <div class='message_container'>
-        <p class="pod_thumbnail_text_title">
-            {{ message.pod_user.first_name }} {{ message.pod_user.last_name }}:
-        </p>
-        {{ message.contents }}
-        {% if message.pod_user.id == pod_member.user_id %}
-            <img class='trash' src='/static/imgs/trash.png'>
-        {% endif %}
-        <p class='timestamp'>{{ message.timestamp }}</p>
-    </div>
-    {% endfor %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class=flashes>
+  {% for category, message in messages %}
+  <li class="{{ category }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<div class="show_team_members_container">
+  {% for message in pod_messages %}
+  <div>
+    <p class="pod_thumbnail_text_title white_font">
+      {{ message.pod_user.first_name }} {{ message.pod_user.last_name }}:
+    </p>
+    <p class='inline_text small_font white_font'>{{ message.contents }}</p>
+    {% if message.pod_user.id == pod_member.user_id %}
+    <img class='trash' src='/static/imgs/trash.png'>
+    {% endif %}
+    <p class='timestamp'>{{ message.timestamp }}</p>
+  </div>
+  {% endfor %}
+</div>
 
 
 {% endblock %}

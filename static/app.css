@@ -2,6 +2,8 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: 'Varela Round', sans-serif;
+  background-color: #252D3A;
+  text-shadow: 0.5px 0.5px 2px rgba(0, 0, 0, 0.5);
 }
 
 a {
@@ -21,13 +23,18 @@ a {
 }
 
 *::-webkit-scrollbar-track {
+  display: none;
   background: white;
+  border-radius: 10px;
+  background: #252D3A;
+  border: 1px solid #252D3A;
+  box-shadow: -6px -6px 4px rgba(56, 68, 89, 0.5), 6px 6px 4px rgba(2, 2, 2, 0.5), inset -6px -6px 4px rgba(56, 68, 89, 0.7), inset 6px 6px 4px rgba(2, 2, 2, 0.26);
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: #387C75;
   border-radius: 20px;
-  border: 3px solid white;
+  border: 3px solid #252D3A;
 }
 
 /* ----------------------------------Styling Navbar------------------------- */
@@ -39,6 +46,7 @@ a {
   color: #fff;
   height: 80px;
   padding: 0 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
 }
 
 .nav-logo {
@@ -129,6 +137,7 @@ a {
   border-radius: 15px;
   font-size: 0.9rem;
   z-index: 1;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
 
 .sidebar_collapsed_buttons {
@@ -147,6 +156,7 @@ a {
 .sidebar_menu_buttons:hover,
 .sidebar_menu_buttons:active {
   background-color: #444;
+  box-shadow: inset -5px -5px 6px #484a4a, inset 5px 5px 5px rgba(33, 39, 38, 0.25);
 }
 
 .main_user_dashboard {
@@ -173,10 +183,21 @@ a {
 .horizontal_scroll_container {
   width: 70vw;
   height: auto;
+  padding: 8px;
+  margin: 10px 0px;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  background: #252D3A;
+  border: 2px solid #252D3A;
+  box-shadow: -6px -6px 4px rgba(56, 68, 89, 0.5), 6px 6px 4px rgba(2, 2, 2, 0.5), inset -6px -6px 4px rgba(56, 68, 89, 0.7), inset 6px 6px 4px rgba(2, 2, 2, 0.26);
+  border-radius: 20px;
+}
+
+.pods_container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .padded_container {
@@ -222,13 +243,36 @@ a {
   border-radius: 15px;
 }
 
+.sub_pod_message_container {
+  white-space: normal;
+  margin: 3px;
+  padding: 5px 5px 5px 15px;
+  border-radius: 10px;
+  background-color: #91AE9C;
+  color: #000000;
+  border-radius: 15px;
+  box-shadow: -4px -4px 4px rgba(145, 174, 156, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #71877A, inset 5px 5px 5px rgba(195, 233, 210, 0.5);
+}
+
 .message_container {
+  white-space: normal;
+  margin: 3px;
+  padding: 5px 5px 5px 15px;
+  border-radius: 10px;
+  background-color: #FFBB00;
+  color: #000000;
+  border-radius: 15px;
+  box-shadow: -4px -4px 6px rgba(255, 192, 19, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #C39003, inset 5px 5px 5px rgba(255, 235, 180, 0.5);
+}
+
+.user_message_container {
   white-space: normal;
   background-color: #387C75;
   margin: 3px;
   padding: 5px 5px 5px 15px;
   border-radius: 10px;
   color: #fff;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
 
 .all_hobbies_container {
@@ -238,7 +282,19 @@ a {
   padding: 5px 5px 5px 15px;
   border-radius: 10px;
   color: #fff;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
+
+.show_team_members_container {
+  width: 70vw;
+  margin: 10px 0px;
+  padding: 10px;
+  background: #252D3A;
+  border: 1px solid #252D3A;
+  box-shadow: -6px -6px 4px rgba(56, 68, 89, 0.5), 6px 6px 4px rgba(2, 2, 2, 0.5), inset -6px -6px 4px rgba(56, 68, 89, 0.7), inset 6px 6px 4px rgba(2, 2, 2, 0.26);
+  border-radius: 20px;
+}
+
 /* ----------------------------Trip advisor attractions----------------------- */
 
 .attraction {
@@ -300,11 +356,15 @@ a {
   border-radius: 20px;
   background-color: #387C75;
   text-align: center;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
+
 .message_form {
   background-color: #387C75;
   border-radius: 20px;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
+
 /* ----------------------------Buttons-------------------------------- */
 .button-primary {
   display: inline-block;
@@ -319,11 +379,13 @@ a {
   border-radius: 15px;
   text-align: center;
   font-size: 1rem;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
 
 .button-primary:hover,
 .button-primary:active {
   background-color: #444;
+  box-shadow: inset -5px -5px 6px #484a4a, inset 5px 5px 5px rgba(33, 39, 38, 0.25);
 }
 
 .button-secondary {
@@ -339,31 +401,39 @@ a {
   border-radius: 15px;
   text-align: center;
   font-size: 1rem;
+  box-shadow: 2px 2px 4px rgb(95, 147, 112), inset 3px 3px 4px rgba(0, 0, 0, 0.35);
 }
 
 .button-secondary:hover,
 .button-secondary:active {
   background-color: #444;
   color: white;
+  box-shadow: inset -5px -5px 6px #484a4a, inset 5px 5px 5px rgba(33, 39, 38, 0.25);
 }
 
 .button-message {
   position: relative;
   top: -30px;
+  display: inline-block;
   width: 150px;
-  background-color: white;
-  color: #387C75;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #387C75;
+  color: white;
   padding: 10px 0px;
   border: none;
   border-radius: 15px;
   text-align: center;
   font-size: 1rem;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
 
 .button-message:hover,
 .button-message:active {
   background-color: #444;
   color: white;
+  box-shadow: inset -5px -5px 6px #484a4a, inset 5px 5px 5px rgba(33, 39, 38, 0.25);
 }
 
 .button-info {
@@ -376,12 +446,14 @@ a {
   border-radius: 15px;
   text-align: center;
   font-size: 1rem;
+  box-shadow: -4px -4px 4px rgba(68, 85, 141, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2B3556, inset 5px 5px 5px rgba(99, 122, 197, 0.5);
 }
 
 .button-info:hover,
 .button-info:active {
   background-color: #444;
   color: white;
+  box-shadow: inset -5px -5px 6px #484a4a, inset 5px 5px 5px rgba(33, 39, 38, 0.25);
 }
 
 /* ----------------------------images----------------------------------- */
@@ -392,22 +464,40 @@ a {
 
 /* ----------------------------Pods------------------------------------- */
 .pod_thumbnail {
-  display: inline-block;
+  flex: 1 1 150px;
   white-space: normal;
   width: 150px;
   height: 150px;
   padding: 5px;
   margin: 5px;
-  /* background-color: #387C75;
-  border-radius: 15px; */
-  border-radius: 33px;
-  background: linear-gradient(145deg, #688764, #577154);
-  box-shadow:  9px 9px 21px #4f664b,
-               -9px -9px 21px #73966f;
+  background-color: #FFBB00;
+  color: #000000;
+  border-radius: 15px;
+  box-shadow: -4px -4px 6px rgba(255, 192, 19, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #C39003, inset 5px 5px 5px rgba(255, 235, 180, 0.5);
 }
 
+
+.sub_pod_thumbnail {
+  flex: 1 1 150px;
+  white-space: normal;
+  width: 150px;
+  height: 150px;
+  padding: 5px;
+  margin: 5px;
+  background-color: #91AE9C;
+  color: #000000;
+  border-radius: 15px;
+  box-shadow: -4px -4px 4px rgba(145, 174, 156, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #71877A, inset 5px 5px 5px rgba(195, 233, 210, 0.5);
+}
+
+.team_members {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
 .team_member_thumbnail {
-  display: inline-block;
+  flex: 1 1 150px;
   white-space: normal;
   width: 150px;
   height: 150px;
@@ -415,18 +505,18 @@ a {
   margin: 5px;
   background-color: #387C75;
   border-radius: 15px;
+  box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
 
 .pod_thumbnail_text_title {
   display: inline-block;
-  color: white;
   font-size: 0.8rem;
   font-weight: bold;
   padding: 3px;
   margin: 3px;
 }
+
 .pod_thumbnail_text {
-  color: white;
   font-size: 0.7rem;
   padding: 3px;
   margin: 3px;
@@ -484,6 +574,7 @@ a {
   color: white;
   border-radius: 15px;
   border: 2px solid #387C75;
+  box-shadow: 2px 2px 4px rgb(78, 79, 78), inset 3px 3px 4px rgba(0, 0, 0, 0.35);
 }
 
 .input_field {
@@ -493,6 +584,19 @@ a {
   width: 165px;
   border-radius: 15px;
   border: 2px solid #387C75;
+  background: white;
+  box-shadow: 2px 2px 4px rgb(95, 147, 112), inset 3px 3px 4px rgba(0, 0, 0, 0.35);
+}
+
+.input_field_dark {
+  margin: 5px;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  width: 165px;
+  border-radius: 15px;
+  border: 2px solid #444;
+  background: white;
+  box-shadow: 2px 2px 4px rgb(95, 97, 96), inset 3px 3px 4px rgba(0, 0, 0, 0.35);
 }
 
 .input_area_field {
@@ -502,7 +606,8 @@ a {
   padding: 8px 16px;
   font-size: 0.9rem;
   border-radius: 15px;
-  border: 2px solid #387C75;
+  border: 2px solid #444;
+  box-shadow: 2px 2px 4px rgb(95, 97, 96), inset 3px 3px 4px rgba(0, 0, 0, 0.35);
 }
 
 .message_field {
@@ -513,12 +618,16 @@ a {
   width: 300px;
   height: 50px;
   border-radius: 15px;
-  border: 2px solid #387C75;
+  color: #000000;
+  border-radius: 15px;
+  box-shadow: inset 5px 5px 5px rgba(73, 73, 73, 0.2);
 }
+
 /* -----------------------------------Additional Text Style ----------------------------- */
 .low_margin_title {
   padding: 3px;
   margin: 3px;
+  color: white;
 }
 
 .timestamp {
@@ -527,4 +636,32 @@ a {
   font-size: 0.6rem;
   color: rgb(219, 218, 218);
   float: right;
+}
+
+.inline_text {
+  display: inline-block;
+}
+
+.small_font {
+  font-size: 0.8rem;
+}
+
+.main_title {
+  color: white;
+}
+
+.sub_title {
+  color: rgb(194, 194, 194);
+}
+
+.content_text {
+  color: rgb(194, 194, 194);
+}
+
+.white_font {
+  color: white;
+}
+
+.black_font {
+  color: black;
 }

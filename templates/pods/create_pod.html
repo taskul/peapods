@@ -14,11 +14,11 @@
   <p class="content_text">Pod is an online group for your team where team members can learn about eachother hobbies and
     interests.
     After you create a Pod, you can invite team members to join the Pod. </p>
-  <p>Use filters to find common hobbies and intrsts with your team members</p>
+  <p class="content_text">Use filters to find common hobbies and intrsts with your team members</p>
   <form method="POST" id="user_form">
     {{ form.hidden_tag() }}
 
-    {{ form.name(placeholder=form.name.label.text, class="input_field") }}
+    {{ form.name(placeholder=form.name.label.text, class="input_field_dark") }}
     <br>
     {{ form.description(placeholder=form.description.label.text, class="input_area_field") }}
     <br>

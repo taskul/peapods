@@ -18,6 +18,15 @@ class UserForm(FlaskForm):
     city = StringField('City', validators=[DataRequired()])
     state = SelectField('State', choices=[(st, st) for st in states])
 
+class EditUserForm(FlaskForm):
+    '''Create new user form'''
+    username = StringField('Username', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[Email()])
+    city = StringField('City', validators=[DataRequired()])
+    state = SelectField('State', choices=[(st, st) for st in states])
+
 class LoginForm(FlaskForm):
     '''Log in user form'''
     username = StringField('Username', validators=[DataRequired()])
@@ -57,6 +66,9 @@ class InviteMembers(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
+
+class InviteExistingMembers(FlaskForm):
+    user_id = SelectField('Team members')
 
 
 

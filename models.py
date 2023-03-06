@@ -28,8 +28,8 @@ class User(db.Model):
     pods = db.relationship('Pod', secondary="pod_users", backref='user')
     sub_pods = db.relationship('SubPod', secondary="sub_pod_users", backref='user')
     hobbies = db.relationship('Hobby', secondary='user_hobbies', backref='user')
-    pod_messages = db.relationship('Message', backref='pod_user')
-    sub_pod_messages = db.relationship('Message', backref='sub_pod_user')
+    pod_messages = db.relationship('PodMessage', backref='pod_user')
+    sub_pod_messages = db.relationship('SubPodMessage', backref='sub_pod_user')
     
     @classmethod
     def signup(cls, username, password, first_name, last_name, email, city, state):
@@ -65,19 +65,13 @@ class Pod(db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.Text)
 
-    messages = db.relationship('Message', secondary='pod_messages', backref='pod')
-    
-
 class SubPod(db.Model):
     __tablename__ = 'sub_pods'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     pod_id = db.Column(db.Integer, db.ForeignKey('pods.id'))
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.Text)
-
-    messages = db.relationship('Message', secondary='sub_pod_messages', backref='sub_pod')
     
-
 class PodUser(db.Model):
     '''Users assigned to Pods'''
     __tablename__ = 'pod_users'
@@ -94,9 +88,18 @@ class SubPodUser(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
     owner = db.Column(db.Boolean, default=False)
     
-class Message(db.Model):
+class PodMessage(db.Model):
     '''User messages'''
-    __tablename__ = 'messages'
+    __tablename__ = 'messages_in_pod'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    contents = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
+    pod_id = db.Column(db.Integer, db.ForeignKey('pods.id', ondelete='cascade'))
+
+class SubPodMessage(db.Model):
+    '''User messages'''
+    __tablename__ = 'messages_in_sub_pod'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     contents = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
@@ -104,18 +107,7 @@ class Message(db.Model):
     pod_id = db.Column(db.Integer, db.ForeignKey('pods.id', ondelete='cascade'))
     sub_pod_id = db.Column(db.Integer, db.ForeignKey('sub_pods.id', ondelete='cascade'))
 
-class PodMessage(db.Model):
-    '''User messages'''
-    __tablename__ = 'pod_messages'
-    pod_id = db.Column(db.Integer, db.ForeignKey('pods.id', ondelete='cascade'), primary_key=True)
-    message_id = db.Column(db.Integer, db.ForeignKey('messages.id', ondelete='cascade'), primary_key=True)
 
-class SubPodMessage(db.Model):
-    '''User messages'''
-    __tablename__ = 'sub_pod_messages'
-    sub_pod_id = db.Column(db.Integer, db.ForeignKey('sub_pods.id', ondelete='cascade'), primary_key=True)
-    message_id = db.Column(db.Integer, db.ForeignKey('messages.id', ondelete='cascade'), primary_key=True)
-    
 class Hobby(db.Model):
     '''User hobbies/activities/intrests'''
     __tablename__ = 'hobbies'
@@ -127,3 +119,22 @@ class UserHobby(db.Model):
     __tablename__ = 'user_hobbies'
     hobby_id = db.Column(db.Integer, db.ForeignKey('hobbies.id', ondelete='cascade'), primary_key=True )
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'), primary_key=True)
+
+
+class InvitedMembers(db.Model):
+    '''Record gets deleted after member joins, so then they could join other pods in the future'''
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
+    pod_id = db.Column(db.Integer, db.ForeignKey('pods.id'))
+    joined = db.Column(db.Boolean, default=False)
+
+class PreviouslyJoined(db.Model):
+    '''Keeps the records of people that were invited in the past'''
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    pod_id = db.Column(db.Integer, db.ForeignKey('pods.id'))
+    joined = db.Column(db.Boolean, default=False)
