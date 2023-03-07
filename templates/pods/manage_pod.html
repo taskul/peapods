@@ -4,7 +4,7 @@
 
 {% block dashboard %}
 <h1 class="main_title">{{ pod.name }} Pod</h1>
-<p class="sub_title">{{ pod.description }}</p>
+<p class="content_text">{{ pod.description }}</p>
 <div>
     <h4 class="low_margin_title">Add team members</h4>
 
@@ -12,6 +12,15 @@
 <a href='/pods/add_members'>
     <div type="button" class="button-primary">Add</div>
 </a>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class=flashes>
+  {% for category, message in messages %}
+  <li class="{{ category }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 <div class='manage_team_container'>
     <h4 class="low_margin_title">Team members</h4>
     {% for member in members %}
@@ -19,7 +28,9 @@
         <p class="pod_thumbnail_text_title">
             {{ member.first_name }} {{ member.last_name }}
         </p>
+        <a href="/pods/{{pod.id}}/delete/user/{{member.id}}">
         <img class='trash' src='/static/imgs/trash.png'>
+        </a>
     </div>
     {% endfor %}
 </div>

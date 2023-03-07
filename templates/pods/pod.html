@@ -4,7 +4,10 @@
 
 {% block dashboard %}
 <h1 class="main_title">{{ pod.name }} Pod</h1>
-<p class="sub_title">{{ pod.description }}</p>
+<a href='/pods/{{pod.id}}/leave/user/{{pod_member.user_id}}'>
+<div type="button" class="button-leave">Leave Pod</div>
+</a>
+<p class="content_text">{{ pod.description }}</p>
 <div class='message_container'>
   <form method="POST" id="user_form">
     {{ form.hidden_tag() }}
@@ -27,7 +30,7 @@
 </ul>
 {% endif %}
 {% endwith %}
-<div class="show_team_members_container">
+<div class="indented_container">
   {% for message in pod_messages %}
   <div>
     <p class="pod_thumbnail_text_title white_font">
@@ -35,7 +38,9 @@
     </p>
     <p class='inline_text small_font white_font'>{{ message.contents }}</p>
     {% if message.pod_user.id == pod_member.user_id %}
+    <a href='/pods/{{pod.id}}/delete/message/{{message.id}}'>
     <img class='trash' src='/static/imgs/trash.png'>
+    </a>
     {% endif %}
     <p class='timestamp'>{{ message.timestamp }}</p>
   </div>

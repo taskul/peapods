@@ -14,7 +14,6 @@ from forms import (UserForm,
                    InviteMembers,
                    InviteExistingMembers)
 from dotenv import load_dotenv
-from flask.cli import AppGroup
 from send_email import send_invite
 
 load_dotenv()
@@ -37,9 +36,22 @@ def get_user_lat_lng(user):
     '''returns the string with latitude and longitue based on user location'''
     url = f'http://api.openweathermap.org/geo/1.0/direct?q={user.city},{user.state},US&appid={OPENWEATHERMAP_API_KEY }'
     response = requests.get(url)
+    print(response)
     lat = response.json()[0]['lat']
     lng = response.json()[0]['lon']
     return f'{lat},{lng}'
+
+def get_user_lat_lng2():
+    city = 'Hayfield'
+    state = 'MN'
+    '''returns the string with latitude and longitue based on user location'''
+    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},US&appid={OPENWEATHERMAP_API_KEY }'
+    response = requests.get(url)
+    lat = response.json()[0]['lat']
+    lng = response.json()[0]['lon']
+    return f'{lat},{lng}'
+
+get_user_lat_lng2()
 
 # ---------------------------------API calls to TRIP ADVISOR-------------------------------
 @app.route('/todo/nearby/<category>')
@@ -138,6 +150,7 @@ def logout_user():
     if CURRENT_USER in session:
         del session[CURRENT_USER]
 
+
 # --------------------------------------Routes --------------------------------------
 @app.route('/')
 def home():
@@ -150,8 +163,11 @@ def home():
             # get all people associated with the pod connected to the current user
             team = PodUser.query.filter(PodUser.pod_id==pod.id).all()
             # create a list of user objects that we can itterate over on the front end
-            team_members = [User.query.get(member.user_id) for member in team]
-            return render_template('/users/user_dashboard.html',  pod=pod, sub_pods=sub_pods, user=user, pod_member=pod_member, team=team_members)
+            team_members = [User.query.get(member.user_id) for member in team if member.user_id != user.id]
+            return render_template('/users/user_dashboard.html',  
+                                   pod=pod, sub_pods=sub_pods, 
+                                   user=user, pod_member=pod_member, 
+                                   team=team_members)
         else:
             return render_template('/users/user_menu.html')
     else:
@@ -167,7 +183,7 @@ def signup():
     if form.validate_on_submit():
         try: 
             user = User.signup(
-                username=form.username.data, 
+                username=form.username.data.lower(), 
                 password=form.password.data,
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
@@ -362,9 +378,74 @@ def pod_home(pod_id):
         db.session.add(message)
         db.session.commit()
         return redirect(f'/pods/{pod_id}')
+    # PodMessage has a backref relationship with User, so we can access user info 
+    # on front end with message.pod_user.first_name
     pod_messages = PodMessage.query.filter(PodMessage.pod_id==pod.id).order_by(PodMessage.timestamp.desc()).all()
     return render_template('/pods/pod.html', form=form, pod=pod, pod_member=pod_member, pod_messages=pod_messages)
 
+
+# delete pod messages
+@app.route('/pods/<int:pod_id>/delete/message/<int:msg_id>')
+def delete_pod_message(msg_id, pod_id):
+    # check to see if user is logged in an authorized to access resource
+    if not g.user:
+        flash("Access unauthorized.", "error")
+        return redirect("/")
+    # returns User object, Pod Object and PodUser object
+    user, pod, pod_member = is_pod_member()
+    message = PodMessage.query.filter(PodMessage.pod_id==pod_id, PodMessage.user_id==user.id, PodMessage.id==msg_id).first()
+    if message:
+        db.session.delete(message)
+        db.session.commit()
+        return redirect(f'/pods/{pod_id}')
+    else:
+        return redirect(f'/pods/{pod_id}')
+    
+# delete users
+@app.route('/pods/<int:pod_id>/delete/user/<int:user_id>')
+def delete_pod_user(pod_id, user_id):
+    # check to see if user is logged in an authorized to access resource
+    if not g.user:
+        flash("Access unauthorized.", "error")
+        return redirect("/")
+    # returns User object, Pod Object and PodUser object
+    user, pod, pod_member = is_pod_member()
+    if not pod_member.owner:
+        flash("Access unauthorized.", "error")
+        return redirect(f"/pods/manage")
+    user = PodUser.query.filter(PodUser.user_id==user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+    sub_pod_user = SubPodUser.query.filter(SubPodUser.user_id==user_id).all()
+    for deleted_user in sub_pod_user:
+        db.session.delete(deleted_user)
+        db.session.commit()
+    delete_user = User.query.get(user_id)
+    flash(f"User {delete_user.first_name} has been deleted from {pod.name} Pod", "success")
+    return redirect(f"/pods/manage")
+
+# leave pod
+@app.route('/pods/<int:pod_id>/leave/user/<int:user_id>')
+def leave_pod(pod_id, user_id):
+    # check to see if user is logged in an authorized to access resource
+    if not g.user:
+        flash("Access unauthorized.", "error")
+        return redirect("/")
+    # returns User object, Pod Object and PodUser object
+    user, pod, pod_member = is_pod_member()
+    if not pod_member:
+        flash("Access unauthorized.", "error")
+        return redirect(f"/pods/manage")
+    user = PodUser.query.filter(PodUser.user_id==user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+    sub_pod_user = SubPodUser.query.filter(SubPodUser.user_id==user_id).all()
+    for deleted_user in sub_pod_user:
+        db.session.delete(deleted_user)
+        db.session.commit()
+    flash(f"You have successfully left {pod.name} Pod", "success")
+    return redirect(f"/")
+    
 
 # ----------------------------------Managing Sub-Pods---------------------------
 @app.route('/sub_pods/create', methods=['GET', 'POST'])
@@ -485,6 +566,44 @@ def sub_pod_home(sub_pod_id):
                            user=user, 
                            pod_member=pod_member)
 
+# delete sub pod messages
+@app.route('/sub_pods/<int:sub_pod_id>/messages/delete/<int:msg_id>')
+def delete_sub_pod_message(msg_id, sub_pod_id):
+    # check to see if user is logged in an authorized to access resource
+    if not g.user:
+        flash("Access unauthorized.", "error")
+        return redirect("/")
+    # returns User object, Pod Object and PodUser object
+    user, pod, pod_member = is_pod_member()
+    message = SubPodMessage.query.filter(SubPodMessage.sub_pod_id==sub_pod_id, SubPodMessage.user_id==user.id, SubPodMessage.id==msg_id).first()
+    if message:
+        db.session.delete(message)
+        db.session.commit()
+        return redirect(f'/sub_pods/{sub_pod_id}')
+    else:
+        return redirect(f'/sub_pods/{sub_pod_id}')
+    
+
+# leave sub pod
+@app.route('/sub_pods/<int:sub_pod_id>/leave/user/<int:user_id>')
+def leave_sub_pod(sub_pod_id, user_id):
+    # check to see if user is logged in an authorized to access resource
+    if not g.user:
+        flash("Access unauthorized.", "error")
+        return redirect("/")
+    # returns User object, Pod Object and PodUser object
+    user, pod, pod_member = is_pod_member()
+    sub_pod = SubPod.query.get(sub_pod_id)
+    if not pod_member:
+        flash("Access unauthorized.", "error")
+        return redirect(f"/pods/manage")
+    sub_pod_user = SubPodUser.query.filter(SubPodUser.user_id==user_id, SubPodUser.sub_pod_id==sub_pod_id).first()
+    db.session.delete(sub_pod_user)
+    db.session.commit()
+    flash(f"You have successfully left {sub_pod.name} Sub-Pod", "success")
+    return redirect(f"/")
+        
+
 # -----------------------------Managing Hobbies/activities ----------------------
 
 @app.route('/hobbies/create', methods=['GET', 'POST'])
@@ -525,6 +644,8 @@ def activities_create():
             form.add_new.data = ''
 
     return render_template('/hobbies/add_hobbies.html', form=form, hobbies=user.hobbies)
+
+
 
 
 if __name__=='__main__':
