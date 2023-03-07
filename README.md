@@ -49,3 +49,6 @@ Some functionality will not work because of environment variables that are not i
 - Current user is listed first
 - All other members are sorted in descending order based on the number of hobbies that match the current user.
 - Current user can click on each team member to view their profile which will include full list of hobbies and interests.
+
+## Database Schema:
+![image of database schema](static/imgs/database_schema.jpg)
