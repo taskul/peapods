@@ -27,15 +27,18 @@ Some functionality will not work because of environment variables that are not i
 - Sending email credentials.
 
 ## Features:
-- Create only one pod for team, company, organization.
-- Then invite members to the pod.
+- Create, Update, Delete user account
+- Each user can create only one pod for team, company, organization. If they are already part of the pod, then they can not create a new pod until they leave the current pod.
+- Owner of the pod can invite members to the pod.
 - Members will be assigned to the pod automatically based on the email provided at sign up.
 - Members can leave pod and then start their own pod (for when user leave teams, organizations, companies)
-- Members can create sub-pods which are smaller groups that can be focused on team members interests like "hiking"
+- Any Member can create sub-pods which are smaller groups that can be focused on team members interests like "hiking"
+- Owner of the sub-pod can then add existing members from a team to a pod
 - Members can post messages inside main pod and sub-pods they are part of.
 - Members can leave sub-pods.
-- Members add their hobbies and interests. 
-- User dashboard will display all other team members and highlight hobbies that are incommon with the current logged in user. They are sorted in descending order.
+- Members can add their hobbies and interests. 
+- User dashboard will display pod and all sub-pods the user belongs to. 
+- User dashboard will also show other team members and highlight hobbies that are incommon with the current logged in user. They are sorted in descending order.
 
 ## Pods and Sub-Pods:
 ![image of examples of pods and sub-pods](static/imgs/Pods_examples.png)
