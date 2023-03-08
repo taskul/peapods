@@ -4,9 +4,9 @@
 
 {% block dashboard %}
 <div class="horizontal_scroll_container">
-    <h4 class="low_margin_title">Pods you own</h4>
+    {% if sub_pods_owned %}
+    <h1 class="main_title">Pods you own</h1>
     <div class="pods_container">
-        {% if sub_pods_owned %}
         {% for sub_pod in sub_pods_owned %}
         <a href="/sub_pods/edit/{{sub_pod.id}}">
             <div class="sub_pod_thumbnail">
@@ -22,10 +22,12 @@
             </div>
         </a>
         {% endfor %}
-        {% else %}
-        <h1 class="main_title">You do not own any Sub-Pods</h1>
-        <p class="sub_title">You can ask for admin priveledges from a Sub-Pod owner.</p>
-        {% endif %}
+    {% else %}
+        <div>
+        <p class='content_text'>You do not own any Sub-Pods</p>
+        <p class="content_text">You can ask for admin priveledges from a Sub-Pod owner.</p>
+        </div>
+    {% endif %}
     </div>
 </div>
 

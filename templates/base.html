@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <nav class="navbar">
+  <nav class="navbar" id="navbar">
     <div class="navbar-brand">
       <a href="/"><img src="/static/imgs/peapods_logo_white.png" class='nav-logo' alt="small PeaPods logo"></a>
 
@@ -23,7 +23,7 @@
     <ul class="navbar-nav">
       {% if not g.user %}
       <li class="nav-item"><a href="/users/login">Login</a></li>
-      <li class="nav-item"><a href="/users/signup">SignUp</a></li>
+      <li class="nav-item signup"><a href="/users/signup">SignUp</a></li>
 
       {% else %}
       <li class="nav-item"><a href="/users/profile/{{g.user.id}}">Profile</a></li>

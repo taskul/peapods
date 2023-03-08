@@ -5,7 +5,7 @@
 {% block dashboard %}
 <h1 class="main_title">{{ user_profile.first_name }} {{ user_profile.last_name }}</h1>
 
-<p class="sub_title">{{ user_profile.city }}, {{ user_profile.state }}</p>
+<p class="content_text">{{ user_profile.city }}, {{ user_profile.state }}</p>
 {% if profile_owner %}
 <a href='/users/edit/{{current_user.id}}'>
     <div type="button" class="button-info">Edit Profile</div>
@@ -40,5 +40,5 @@
     {% endif %}
 </div>
 
-
+<script src='/static/compare_profiles.js'></script>
 {% endblock %}

@@ -47,6 +47,7 @@ a {
   height: 80px;
   padding: 0 20px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+  transition: top 0.3s;
 }
 
 .nav-logo {
@@ -78,7 +79,7 @@ a {
   display: none;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-device-width: 480px) and (orientation: portrait) {
   .navbar {
     flex-direction: column;
     height: auto;
@@ -114,6 +115,19 @@ a {
     background-color: #444;
     color: #fff;
     border-radius: 5px;
+  }
+
+  .main_container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .sidebar_menu {
+    display: none;
+  }
+
+  .sidebar_menu_buttons {
+    display: none;
   }
 }
 
@@ -180,19 +194,26 @@ a {
   padding: 8px;
 }
 
+.front_page_container {
+  margin: 0px;
+  background-color: white;
+}
+
+.front_page_container_dark {
+  margin: 0px;
+  background-color: #252D3A;
+  text-align: center;
+  padding: 40px;
+}
+
 .horizontal_scroll_container {
   width: 70vw;
   height: auto;
   padding: 8px;
-  margin: 10px 0px;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  background: #252D3A;
-  border: 2px solid #252D3A;
-  box-shadow: -6px -6px 4px rgba(56, 68, 89, 0.5), 6px 6px 4px rgba(2, 2, 2, 0.5), inset -6px -6px 4px rgba(56, 68, 89, 0.7), inset 6px 6px 4px rgba(2, 2, 2, 0.26);
-  border-radius: 20px;
 }
 
 .pods_container {
@@ -212,7 +233,7 @@ a {
 
 .half_and_half_split_container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 50% 50%;
   grid-gap: 8px;
   padding: 8px;
 }
@@ -245,6 +266,7 @@ a {
 
 .sub_pod_message_container {
   white-space: normal;
+  width: 70vw;
   margin: 3px;
   padding: 5px 5px 5px 15px;
   border-radius: 10px;
@@ -256,6 +278,7 @@ a {
 
 .message_container {
   white-space: normal;
+  width: 70vw;
   margin: 3px;
   padding: 5px 5px 5px 15px;
   border-radius: 10px;
@@ -285,9 +308,9 @@ a {
   box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
 }
 
-.show_team_members_container {
+.indented_container {
   width: 70vw;
-  margin: 10px 0px;
+  margin: 15px 0px;
   padding: 10px;
   background: #252D3A;
   border: 1px solid #252D3A;
@@ -295,24 +318,25 @@ a {
   border-radius: 20px;
 }
 
-/* ----------------------------Trip advisor attractions----------------------- */
+.indented_container_label {
+  width: auto;
+  padding: 5px 30px;
+  background-color: #252D3A;
+  border-radius: 10px;
+  box-shadow: -4px -4px 4px rgba(77, 93, 120, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #1A2028, inset 5px 5px 5px rgba(77, 93, 120, 0.5);
+}
 
-.attraction {
-  display: inline-block;
+.attractions_container {
+  flex: 0 0 auto;
   white-space: normal;
   width: 150px;
+  height: 110px;
   padding: 5px;
   margin: 5px;
-  border: 2px solid #3b7c38;
-  font-size: 0.7rem;
-}
-
-.attraction_title {
-  display: inline-block;
-}
-
-.attraction_link {
-  margin: 10px;
+  background-color: #DAECE1;
+  color: #000000;
+  border-radius: 15px;
+  box-shadow: -4px -4px 4px rgba(218, 236, 225, 0.08), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #B1C1B8, inset 5px 5px 5px rgba(255, 255, 255, 0.5);
 }
 
 /* ---------------------------loading spinner--------------------------------- */
@@ -456,6 +480,21 @@ a {
   box-shadow: inset -5px -5px 6px #484a4a, inset 5px 5px 5px rgba(33, 39, 38, 0.25);
 }
 
+.button-leave {
+  float: right;
+  margin-top: -50px;
+  margin-right: 100px;
+  width: 150px;
+  background-color: #FD4646;
+  color: white;
+  padding: 10px 0px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1rem;
+  box-shadow: -4px -4px 4px rgba(253, 70, 70, 0.08), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #C03939, inset 5px 5px 5px rgba(255, 197, 197, 0.5);
+}
+
 /* ----------------------------images----------------------------------- */
 #tripadvisor_logo {
   height: 20px;
@@ -464,7 +503,7 @@ a {
 
 /* ----------------------------Pods------------------------------------- */
 .pod_thumbnail {
-  flex: 1 1 150px;
+  flex: 0 0 auto;
   white-space: normal;
   width: 150px;
   height: 150px;
@@ -478,7 +517,7 @@ a {
 
 
 .sub_pod_thumbnail {
-  flex: 1 1 150px;
+  flex: 0 0 auto;
   white-space: normal;
   width: 150px;
   height: 150px;
@@ -495,9 +534,8 @@ a {
   flex-wrap: wrap;
 }
 
-
 .team_member_thumbnail {
-  flex: 1 1 150px;
+  flex: 0 0 auto;
   white-space: normal;
   width: 150px;
   height: 150px;
@@ -623,6 +661,24 @@ a {
   box-shadow: inset 5px 5px 5px rgba(73, 73, 73, 0.2);
 }
 
+/* ------------------------------------Images ------------------------------------------- */
+
+.main-logo-img {
+  width: 250px;
+}
+
+.main-logo-text {
+  width: 350px;
+}
+
+.img_examples {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80vw;
+  padding: 30px 0px;
+}
+
 /* -----------------------------------Additional Text Style ----------------------------- */
 .low_margin_title {
   padding: 3px;
@@ -634,7 +690,7 @@ a {
   margin: 0px;
   padding: 0px;
   font-size: 0.6rem;
-  color: rgb(219, 218, 218);
+  color: rgb(165, 165, 165);
   float: right;
 }
 
@@ -646,12 +702,12 @@ a {
   font-size: 0.8rem;
 }
 
-.main_title {
-  color: white;
+.larger_font {
+  font-size: 1.2rem;
 }
 
-.sub_title {
-  color: rgb(194, 194, 194);
+.main_title {
+  color: white;
 }
 
 .content_text {
@@ -664,4 +720,8 @@ a {
 
 .black_font {
   color: black;
+}
+
+.yellow_font {
+  color: #FFBB00;
 }
