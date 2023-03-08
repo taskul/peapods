@@ -70,7 +70,7 @@ async function createListOfAttractions() {
     }
 }
 
-// createListOfAttractions()
+createListOfAttractions()
 
 // ----------------------------------highlighing matching hobbies--------------
 const teamMembers = document.querySelectorAll('.team_member_thumbnail')
