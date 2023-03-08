@@ -23,7 +23,7 @@ TRIPADVISOR_KEY = os.environ.get('TRIPADVISOR_KEY')
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'sqlite:///peapods.db'))
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///peapods'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -35,6 +35,17 @@ app.app_context().push()
 def get_user_lat_lng(user):
     '''returns the string with latitude and longitue based on user location'''
     url = f'http://api.openweathermap.org/geo/1.0/direct?q={user.city},{user.state},US&appid={OPENWEATHERMAP_API_KEY }'
+    response = requests.get(url)
+    print(response)
+    lat = response.json()[0]['lat']
+    lng = response.json()[0]['lon']
+    return f'{lat},{lng}'
+
+def get_user_lat_lng2():
+    city = 'Hayfield'
+    state = 'MN'
+    '''returns the string with latitude and longitue based on user location'''
+    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},US&appid={OPENWEATHERMAP_API_KEY }'
     response = requests.get(url)
     lat = response.json()[0]['lat']
     lng = response.json()[0]['lon']
@@ -647,4 +658,4 @@ def activities_create():
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run()
