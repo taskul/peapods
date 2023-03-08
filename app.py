@@ -26,7 +26,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///peapods'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'oh_so_Super_Secr8')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 connect_db(app)
 app.app_context().push()
@@ -50,8 +50,6 @@ def get_user_lat_lng2():
     lat = response.json()[0]['lat']
     lng = response.json()[0]['lon']
     return f'{lat},{lng}'
-
-get_user_lat_lng2()
 
 # ---------------------------------API calls to TRIP ADVISOR-------------------------------
 @app.route('/todo/nearby/<category>')
@@ -649,4 +647,4 @@ def activities_create():
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run()
