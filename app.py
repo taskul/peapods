@@ -23,7 +23,7 @@ TRIPADVISOR_KEY = os.environ.get('TRIPADVISOR_KEY')
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'sqlite:///peapods.db'))
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE', 'sqlite:///peapods.db'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'oh_so_Super_Secr8')
