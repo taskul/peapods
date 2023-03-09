@@ -30,6 +30,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 connect_db(app)
 app.app_context().push()
+db.create_all()
 
 # ---------------------------------API calls to OPENWEATHERMAP-------------------------------
 def get_user_lat_lng(user):
