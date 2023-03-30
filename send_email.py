@@ -7,6 +7,8 @@ load_dotenv()
 PASSWORD = os.environ.get('PASSWORD')
 EMAIL = os.environ.get('EMAIL')
 
+
+
 def send_invite(reciever_email, sender_name, reciever_name, pod_name):
     '''Sending invitation to join a Pod to team members'''
     message = generate_message(reciever_name, sender_name, pod_name)

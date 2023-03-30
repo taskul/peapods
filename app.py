@@ -14,12 +14,14 @@ from forms import (UserForm,
                    InviteMembers,
                    InviteExistingMembers)
 from dotenv import load_dotenv
-from send_email import send_invite
+from flask_mail import Mail, Message
 
 load_dotenv()
 CURRENT_USER = "curr_user"
 OPENWEATHERMAP_API_KEY = os.environ.get('OPENWEATHER_KEY')
 TRIPADVISOR_KEY = os.environ.get('TRIPADVISOR_KEY')
+PASSWORD = os.environ.get('PASSWORD')
+EMAIL = os.environ.get('EMAIL')
 
 app = Flask(__name__)
 
@@ -27,9 +29,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgre
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['MAIL_USERNAME'] = EMAIL
+app.config['MAIL_PASSWORD'] = PASSWORD
+app.config['MAIL_SERVER']='smtp.mail.yahoo.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
 connect_db(app)
 app.app_context().push()
+
+mail = Mail(app)
 
 # ---------------------------------API calls to OPENWEATHERMAP-------------------------------
 def get_user_lat_lng(user):
@@ -352,11 +362,12 @@ def add_pod_members():
     if form.validate_on_submit():
         sender_name = f'{user.first_name} {user.last_name}'
         reciever_name = f'{form.first_name.data}'
-        # send an email
-        send_invite(reciever_email=form.email.data,
-                    sender_name=sender_name, 
-                    reciever_name=reciever_name, 
-                    pod_name=pod.name)
+        msg = Message(f'You have been invited to join a {pod.name} Pod', sender =EMAIL, recipients = [form.email.data])
+        msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
+        f'''Hello {reciever_name}!\n You have been invited by {sender_name} to join a {pod.name} Pod at PeaPods.\n
+        What is a Pod you may ask? PeaPods is a place for teams to learn about eachother's hobbie and interests and be able to see who on your team matches your hobbies at a quick glance.\n 
+        Sign up for an account at https://peapods.herokuapp.com/'''
+        mail.send(msg)
         # create a record of people who were invited
         invited = InvitedMembers(first_name=form.first_name.data,
                                  last_name=form.last_name.data,
