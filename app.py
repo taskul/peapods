@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, render_template, request, redirect, flash, session, g, abort
+from flask import Flask, render_template, request, redirect, flash, session, g
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Pod, SubPod, PodMessage, SubPodMessage, PodUser, SubPodUser, Hobby, UserHobby, InvitedMembers, PreviouslyJoined
 from forms import (UserForm, 
@@ -23,10 +23,10 @@ TRIPADVISOR_KEY = os.environ.get('TRIPADVISOR_KEY')
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'sqlite:///peapods.db'))
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///peapods'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'oh_so_Super_Secr8')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 connect_db(app)
 app.app_context().push()
@@ -51,7 +51,16 @@ def get_user_lat_lng2():
     lng = response.json()[0]['lon']
     return f'{lat},{lng}'
 
-get_user_lat_lng2()
+def get_user_lat_lng2():
+    city = 'Hayfield'
+    state = 'MN'
+    '''returns the string with latitude and longitue based on user location'''
+    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},US&appid={OPENWEATHERMAP_API_KEY }'
+    response = requests.get(url)
+    if response.status_code == 200:
+        lat = response.json()[0]['lat']
+        lng = response.json()[0]['lon']
+        return f'{lat},{lng}'
 
 # ---------------------------------API calls to TRIP ADVISOR-------------------------------
 @app.route('/todo/nearby/<category>')
@@ -66,9 +75,9 @@ def search_nearby(category):
         headers = {"accept": "application/json"}
         params = {'latLong':user.lat_lng, 'key':TRIPADVISOR_KEY, 'category':category, 'language':'en'}
         response = requests.get(search_nearby_url, headers=headers, params=params)
-        print(response.json())
-        location_ids = [loc_id['location_id'] for loc_id in response.json()['data']]
-        return location_ids
+        if response.status_code == 200:
+            location_ids = [loc_id['location_id'] for loc_id in response.json()['data']]
+            return location_ids
 
 @app.route('/todo/nearby/details/<int:loc_id>', methods=['GET'])
 def get_loc_details(loc_id):
@@ -649,4 +658,4 @@ def activities_create():
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run()

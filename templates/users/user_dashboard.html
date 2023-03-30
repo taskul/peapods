@@ -5,56 +5,58 @@
 <div>
     <img src="/static/imgs/tripadvisor_logo.png" id="tripadvisor_logo">
     <fieldset class='indented_container'>
-        <legend class="indented_container_label white_font">Things to do near {{ user.city.capitalize() }}, {{ user.state.upper() }}</legend>
-  
-       <div class="horizontal_scroll_container" id="things_to_do">
+        <legend class="indented_container_label white_font">Things to do near {{ user.city.capitalize() }}, {{
+            user.state.upper() }}</legend>
+
+        <div class="horizontal_scroll_container" id="things_to_do">
             <div class="loader"></div>
         </div>
+    </fieldset>
     </fieldset>
 </div>
 
 
 <fieldset class='indented_container'>
-    <legend class="indented_container_label white_font">Pods you belong to</legend> 
+    <legend class="indented_container_label white_font">Pods you belong to</legend>
     <div class="horizontal_scroll_container">
-    <a href="/pods/{{pod.id}}">
-        <div class="pod_thumbnail">
-            <p class="pod_thumbnail_text">
-                Pod
-            </p>
-            <p class="pod_thumbnail_text_title white_font">
-                {{ pod.name }}
-            </p>
-            <p class="pod_thumbnail_text">
-                {{ pod.description[0:100] }}...
-            </p>
-        </div>
-    </a>
-    {% if sub_pods %}
-    {% for sub_pod in sub_pods %}
-    <a href="/sub_pods/{{sub_pod.id}}">
-        <div class="sub_pod_thumbnail">
-            <p class="pod_thumbnail_text">
-                Sub-Pod
-            </p>
-            <p class="pod_thumbnail_text_title black_font">
-                {{ sub_pod.name }}
-            </p>
-            <p class="pod_thumbnail_text">
-                {{ sub_pod.description[0:100] }}...
-            </p>
-        </div>
-    </a>
-    {% endfor %}
-    {% endif %}
-</div>
+        <a href="/pods/{{pod.id}}">
+            <div class="pod_thumbnail">
+                <p class="pod_thumbnail_text">
+                    Pod
+                </p>
+                <p class="pod_thumbnail_text_title white_font">
+                    {{ pod.name }}
+                </p>
+                <p class="pod_thumbnail_text">
+                    {{ pod.description[0:100] }}...
+                </p>
+            </div>
+        </a>
+        {% if sub_pods %}
+        {% for sub_pod in sub_pods %}
+        <a href="/sub_pods/{{sub_pod.id}}">
+            <div class="sub_pod_thumbnail">
+                <p class="pod_thumbnail_text">
+                    Sub-Pod
+                </p>
+                <p class="pod_thumbnail_text_title black_font">
+                    {{ sub_pod.name }}
+                </p>
+                <p class="pod_thumbnail_text">
+                    {{ sub_pod.description[0:100] }}...
+                </p>
+            </div>
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
 </fieldset>
 
 <fieldset class='indented_container'>
-    <legend class="indented_container_label white_font">Your team</legend> 
+    <legend class="indented_container_label white_font">Your team</legend>
     <div class="team_members">
-            <div class='team_member_thumbnail'>
-                <a href='/users/profile/{{user.id}}'>
+        <div class='team_member_thumbnail'>
+            <a href='/users/profile/{{user.id}}'>
                 <p class="pod_thumbnail_text_title white_font">
                     {{ user.first_name }} {{ user.last_name }}
                 </p>
@@ -66,14 +68,14 @@
                     {% endfor %}
                 </ul>
                 <a>
-            </div>
+        </div>
         {% for member in team %}
-            <div class='team_member_thumbnail'>
-                <a href='/users/profile/{{member.id}}'>
+        <div class='team_member_thumbnail'>
+            <a href='/users/profile/{{member.id}}'>
                 <p class="pod_thumbnail_text_title white_font">
                     {{ member.first_name }} {{ member.last_name }}
                 </p>
-                
+
                 <ul class="undecorated_list">
                     {% for hobby in member.hobbies %}
                     <li class="pod_thumbnail_text white_font">
@@ -82,11 +84,11 @@
                     {% endfor %}
                 </ul>
             </a>
-            </div>
+        </div>
         {% endfor %}
     </div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="/static/dashboard.js"></script>
+    <script src="/static/dashboard.js"></script>
 
-{% endblock %}
+    {% endblock %}

@@ -1,12 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'dark_base.html' %}
 {% block title %}Pick hobbies{% endblock %}
 
 {% block content %}
 
-<div class="center_contents_containers">
-    <h1 class="main_title">Pick hobbies/activities you enjoy doing.</h1>
-    <div class="half_and_half_split_container">
-        <div clas="sidebar_menu">
+<div class="front_page_container_dark">
+    <div class="flex_container">
+    <div class="flex_container_child">
+        <div class='indented_container_label'>
+            <div class='center_text'>
+            <h1 class="main_title">Pick hobbies/activities you enjoy doing.</h1>
             <form method="POST" id="user_form">
                 {{ form.hidden_tag() }}
                 <p class="low_margin_title">Select hobbies from the list</p>
@@ -17,14 +19,22 @@
                 <button class="button-primary" type="submit">Add</button>
             </form>
         </div>
-        <div class="user_hobbies">
+        </div>
+        </div>
+    <div class="flex_container_child">
+        <div class='indented_container_label'>
+            <div class="fixed_img_size">
+            <div class='center_text'>
             <h4 class="low_margin_title">Your hobies</h4>
             <ul class="hobbies_list">
                 {% for hobby in hobbies %}
                 <li class='white_font'>{{ hobby.name }}</li>
                 {% endfor %}
             </ul>
+            </div>
         </div>
+    </div>
+
         <div>
             <a href='/'>
                 <div type="button" class="button-primary">Done</div>
@@ -39,7 +49,7 @@
             {% endif %}
             {% endwith %}
         </div>
-
     </div>
+</div>
 
     {% endblock %}
