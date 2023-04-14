@@ -204,10 +204,10 @@ def signup():
             user = User.signup(
                 username=form.username.data.lower(), 
                 password=form.password.data,
-                first_name=form.first_name.data,
-                last_name=form.last_name.data,
-                email=form.email.data,
-                city=form.city.data,
+                first_name=form.first_name.data.capitalize(),
+                last_name=form.last_name.data.capitalize(),
+                email=form.email.data.lower(),
+                city=form.city.data.capitalize(),
                 state=form.state.data
             )
             db.session.commit()
@@ -237,7 +237,10 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.authenticate(username=form.username.data, password=form.password.data)
+        user = User.authenticate(
+            username=form.username.data.lower(),
+            password=form.password.data
+        )
         if user:
             login_user(user)
             return redirect('/')
@@ -362,7 +365,7 @@ def add_pod_members():
     if form.validate_on_submit():
         sender_name = f'{user.first_name} {user.last_name}'
         reciever_name = f'{form.first_name.data}'
-        msg = Message(f'You have been invited to join a {pod.name} Pod', sender =EMAIL, recipients = [form.email.data])
+        msg = Message(f'You have been invited to join a {pod.name} Pod', sender =EMAIL, recipients = [form.email.data.lower()])
         msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
         f'''Hello {reciever_name}!\n You have been invited by {sender_name} to join a {pod.name} Pod at PeaPods.\n
         What is a Pod you may ask? PeaPods is a place for teams to learn about eachother's hobbie and interests and be able to see who on your team matches your hobbies at a quick glance.\n 
@@ -371,7 +374,7 @@ def add_pod_members():
         # create a record of people who were invited
         invited = InvitedMembers(first_name=form.first_name.data,
                                  last_name=form.last_name.data,
-                                 email=form.email.data,
+                                 email=form.email.data.lower(),
                                  pod_id=pod.id)
         db.session.add(invited)
         db.session.commit()
