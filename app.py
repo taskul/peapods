@@ -369,7 +369,7 @@ def add_pod_members():
         msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
         f'''Hello {reciever_name}!\n You have been invited by {sender_name} to join a {pod.name} Pod at PeaPods.\n
         What is a Pod you may ask? PeaPods is a place for teams to learn about eachother's hobbie and interests and be able to see who on your team matches your hobbies at a quick glance.\n 
-        Sign up for an account at https://peapods.herokuapp.com/'''
+        Sign up for an account at https://peapods.onrender.com/'''
         mail.send(msg)
         # create a record of people who were invited
         invited = InvitedMembers(first_name=form.first_name.data,
