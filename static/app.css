@@ -373,13 +373,22 @@ a {
 
 /* --------------------------Forms------------------------- */
 .user_forms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+  gap: 0px;
   margin: 0 auto;
   width: 400px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 20px;
   background-color: #387C75;
   text-align: center;
   box-shadow: -4px -4px 4px rgba(56, 124, 117, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.35), inset -5px -5px 6px #2F6661, inset 5px 5px 5px rgba(74, 163, 154, 0.25);
+}
+
+.user_forms input {
+  margin: 0px;
 }
 
 .message_form {
@@ -577,6 +586,7 @@ a {
 
 /* -----------------------------------Messages to the user------------------------------- */
 .error {
+  align-self: center;
   width: 310px;
   padding: 5px;
   margin-left: auto;

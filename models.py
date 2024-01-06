@@ -1,22 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
-
 from datetime import datetime
-
 from flask_bcrypt import Bcrypt
-from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
 def connect_db(app):
-    db.app = app
     db.init_app(app)
+    db.app = app
+
 
 class User(db.Model):
     '''Users model'''
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False, index=True)
     password = db.Column(db.Text, nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
@@ -79,6 +77,9 @@ class PodUser(db.Model):
     pod_id = db.Column(db.Integer, db.ForeignKey('pods.id', ondelete='cascade'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
     owner = db.Column(db.Boolean, default=False)
+
+    # Add the following line to explicitly set the order of creation
+    __table_args__ = (db.UniqueConstraint('pod_id', 'user_id', name='_pod_user_uc'),)
 
 class SubPodUser(db.Model):
     __tablename__ = 'sub_pod_users'
