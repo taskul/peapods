@@ -46,9 +46,7 @@ def get_user_lat_lng(user):
     '''returns the string with latitude and longitue based on user location'''
     url = f'http://api.openweathermap.org/geo/1.0/direct?q={user.city},{user.state},US&appid={OPENWEATHERMAP_API_KEY }'
     response = requests.get(url)
-    print('RESPONSE----------------------', response.json())
     if response.json():
-        print('There is something here--------------')
         lat = response.json()[0]['lat']
         lng = response.json()[0]['lon']
         return f'{lat},{lng}'
